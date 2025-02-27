@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:calendar_dashboard/network/app_controller.dart';
+import 'package:calendar_dashboard/network/mqtt_func.dart';
+import 'package:calendar_dashboard/network/network_calls.dart';
 import 'package:calendar_dashboard/pages/add_relative/add_relative.dart';
 import 'package:calendar_dashboard/widgets/custom_card.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +34,9 @@ class _PlaqueDetailPageState extends State<PlaqueDetailPage> {
     // getPlaques();
     hebrewDateFormatter.hebrewFormat = true;
   }
+
+  bool isTesting = false;
+  MQTTClientWrapper newclient = MQTTClientWrapper();
 
   HebrewDateFormatter hebrewDateFormatter = HebrewDateFormatter();
   final appController = Get.find<MyAppController>();
@@ -113,12 +120,58 @@ class _PlaqueDetailPageState extends State<PlaqueDetailPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(),
+                    Spacer(
+                      flex: 1,
+                    ),
                     const Text(
                       'Relatives',
                       style: TextStyle(
                         fontSize: 18,
                       ),
+                    ),
+                    Spacer(
+                      flex: 1,
+                    ),
+                    GestureDetector(
+                      onTap: () async {
+                        // var body = {
+                        //   "led_number":
+
+                        //       // addLedController.text
+                        //       "N1-15"
+                        // };
+
+                        var body = {
+                          "led_number": widget.isMale
+                              ? appController.maleList[widget.index].led
+                              : appController.femaleList[widget.index].led,
+                          "send_sms": "true",
+                        };
+                        print(body);
+                        isTesting = true;
+                        setState(() {});
+
+                        final response = await NetworkCalls().testLed(body);
+                        if (response.contains('Error')) {
+                          Get.rawSnackbar(
+                            message: response,
+                            backgroundColor: Colors.red,
+                          );
+                        }
+                        newclient.publishMessage(jsonEncode(body));
+                        Get.rawSnackbar(
+                          message: 'Led Tested Successfully!',
+                          backgroundColor: Colors.green.shade500,
+                        );
+                        isTesting = false;
+                        setState(() {});
+                      },
+                      child: CustomCard(
+                        child: Text(isTesting ? 'Testing ...' : 'Test Led'),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 30,
                     ),
                     IconButton(
                         onPressed: () {

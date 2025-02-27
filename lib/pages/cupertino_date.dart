@@ -99,7 +99,56 @@ class _CupertinoHebrewDatePickerState extends State<CupertinoHebrewDatePicker> {
     "כט",
     "ל"
   ];
+
+  final _alldays = [
+    "א",
+    "ב",
+    "ג",
+    "ד",
+    "ה",
+    "ו",
+    "ז",
+    "ח",
+    "ט",
+    "י",
+    "יא",
+    "יב",
+    "יג",
+    "יד",
+    "טו",
+    "טז",
+    "יז",
+    "יח",
+    "יט",
+    "כ",
+    "כא",
+    "כב",
+    "כג",
+    "כד",
+    "כה",
+    "כו",
+    "כז",
+    "כח",
+    "כט",
+    "ל"
+  ];
+
   final _months = [
+    "ניסן",
+    "אייר",
+    "סיוון",
+    "תמוז",
+    "אב",
+    "אלול",
+    "תשרי",
+    "חשוון",
+    "כסלו",
+    "טבת",
+    "שבט",
+    "אדר א",
+    "אדר ב",
+  ];
+  final _allmonths = [
     "ניסן",
     "אייר",
     "סיוון",
@@ -121,15 +170,21 @@ class _CupertinoHebrewDatePickerState extends State<CupertinoHebrewDatePicker> {
     print(selectedMonthIndex);
     print(selectedYearIndex);
 
-    var day = selectedDayIndex == 0
-        ? jewishDate.getJewishDayOfMonth()
-        : selectedDayIndex + 1;
-    var month = selectedMonthIndex == 0
-        ? jewishDate.getJewishMonth()
-        : selectedMonthIndex + 1;
-    var year = selectedYearIndex == 0
-        ? jewishDate.getJewishYear()
-        : _years[selectedYearIndex];
+    var day =
+        // selectedDayIndex == 0
+        // ? jewishDate.getJewishDayOfMonth()
+        // :
+        selectedDayIndex + 1;
+    var month = selectedMonthIndex + 1
+        // == 0
+        // ? jewishDate.getJewishMonth()
+        // : selectedMonthIndex
+        ;
+    var year =
+        // selectedYearIndex == 0
+        // ? jewishDate.getJewishYear()
+        // :
+        _years[selectedYearIndex];
 
     print('day: $day month: $month year: $year');
 
