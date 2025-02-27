@@ -35,6 +35,34 @@ class _PlaqueDetailPageState extends State<PlaqueDetailPage> {
     hebrewDateFormatter.hebrewFormat = true;
   }
 
+  TextEditingController hostController = TextEditingController();
+  TextEditingController portController = TextEditingController();
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  getCredentials() async {
+    final response = await appController.getCredentials();
+    if (response.contains('Error:')) {
+      Get.rawSnackbar(
+        message: 'Error fetching credentials',
+        backgroundColor: Colors.red,
+      );
+    } else {
+      print(response);
+      final decodedResponse = jsonDecode(response);
+      hostController.text = decodedResponse['data']['host'];
+      portController.text = decodedResponse['data']['port'];
+      userNameController.text = decodedResponse['data']['username'];
+      passwordController.text = decodedResponse['data']['password'];
+
+      await newclient.prepareMqttClient(
+          hostController.text,
+          portController.text,
+          userNameController.text,
+          passwordController.text);
+    }
+  }
+
   bool isTesting = false;
   MQTTClientWrapper newclient = MQTTClientWrapper();
 
