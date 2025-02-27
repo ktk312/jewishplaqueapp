@@ -33,6 +33,7 @@ class _PlaqueDetailPageState extends State<PlaqueDetailPage> {
     super.initState();
     // getPlaques();
     hebrewDateFormatter.hebrewFormat = true;
+    getCredentials();
   }
 
   TextEditingController hostController = TextEditingController();
