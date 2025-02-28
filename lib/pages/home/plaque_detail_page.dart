@@ -175,6 +175,9 @@ class _PlaqueDetailPageState extends State<PlaqueDetailPage> {
                               ? appController.maleList[widget.index].led
                               : appController.femaleList[widget.index].led,
                           "send_sms": "true",
+                          "id": widget.isMale
+                              ? appController.maleList[widget.index].plaqueId
+                              : appController.femaleList[widget.index].plaqueId,
                         };
                         print(body);
                         isTesting = true;
