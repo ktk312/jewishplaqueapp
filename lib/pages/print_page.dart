@@ -126,7 +126,8 @@ class _PrintPageState extends State<PrintPage> {
                                   pw.Text(
                                       hebrewDateFormatter.format(
                                           JewishDate.fromDateTime(
-                                              DateTime.tryParse(plaque.dod)!)),
+                                              DateTime.tryParse(
+                                                  plaque.predate)!)),
                                       textDirection: pw.TextDirection.rtl,
                                       textAlign: pw.TextAlign.center,
                                       style: pw.TextStyle(
@@ -182,7 +183,8 @@ class _PrintPageState extends State<PrintPage> {
                                   pw.Text(
                                       hebrewDateFormatter.format(
                                           JewishDate.fromDateTime(
-                                              DateTime.tryParse(plaque.dod)!)),
+                                              DateTime.tryParse(
+                                                  plaque.predate)!)),
                                       textDirection: pw.TextDirection.rtl,
                                       textAlign: pw.TextAlign.center,
                                       style: pw.TextStyle(
@@ -335,7 +337,8 @@ class _PrintPageState extends State<PrintPage> {
                                                   hebrewDateFormatter.format(
                                                       JewishDate.fromDateTime(
                                                           DateTime.tryParse(
-                                                              plaque.dod)!)),
+                                                              plaque
+                                                                  .predate)!)),
                                                   style: const TextStyle(
                                                       fontSize: 16.0))
                                             ],
@@ -425,7 +428,8 @@ class _PrintPageState extends State<PrintPage> {
                                                   hebrewDateFormatter.format(
                                                       JewishDate.fromDateTime(
                                                           DateTime.tryParse(
-                                                              plaque.dod)!)),
+                                                              plaque
+                                                                  .predate)!)),
                                                   style: const TextStyle(
                                                       fontSize: 16.0))
                                             ],

@@ -280,6 +280,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.11.1"
+  material_hebrew_date_picker:
+    dependency: "direct main"
+    description:
+      name: material_hebrew_date_picker
+      sha256: ada63e25d2c29e64a5e49371711a4f3fb18f1b613b4c842ed17d18d0aa908b0d
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0+6"
   meta:
     dependency: transitive
     description:

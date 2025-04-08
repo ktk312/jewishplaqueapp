@@ -8,6 +8,7 @@ import 'package:calendar_dashboard/network/network_calls.dart';
 import 'package:calendar_dashboard/pages/cupertino_date.dart';
 import 'package:calendar_dashboard/widgets/custom_card.dart';
 import 'package:flutter/material.dart';
+import 'package:material_hebrew_date_picker/material_hebrew_date_picker.dart';
 import 'package:wheel_picker/wheel_picker.dart';
 import 'package:get/get.dart';
 import 'package:kosher_dart/kosher_dart.dart';
@@ -339,39 +340,130 @@ class _AddPlaqueState extends State<AddPlaque> {
                 CustomCard(
                     child: Container(
                   child: GestureDetector(
-                    onTap: () {
-                      showHebrewCupertinoDatePicker(
-                          confirmText: "Confirm",
-                          initialDate: DateTime.now(),
-                          context: context,
-                          // Everytime the date is changed, the callback is called
-                          onDateChanged: (dateTime) {
-                            print(dateTime);
-                          },
-                          // When the users clicks on the confirm button, the onConfirm callback is called.
-                          onConfirm: (dateTime) {
-                            print('Confirm');
+                    onTap: () async {
+                      // showHebrewCupertinoDatePicker(
+                      //     confirmText: "Confirm",
+                      //     context: context,
+                      //     onDateChanged: (dateTime) {
+                      //       print(dateTime);
+                      //     },
+                      //     // When the user click on the "Confirm" button, the onConfirm callback is called.
+                      //     onConfirm: (dateTime) {
+                      //       print(dateTime);
+                      //     });
 
-                            final jewishDate =
-                                JewishDate.fromDateTime(dateTime);
-                            print(jewishDate);
-                            jDate.clear();
-                            hebrewDateFormatter.hebrewFormat = true;
-                            print(jewishDate);
-                            print(hebrewDateFormatter.format(jewishDate));
-                            jDate.add(hebrewDateFormatter.format(jewishDate));
-                            jDate.add(dateTime);
+                      await showMaterialHebrewDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: JewishDate.initDate(
+                                jewishYear: 5600,
+                                jewishMonth: 1,
+                                jewishDayOfMonth: 1)
+                            .getGregorianCalendar(),
+                        lastDate: JewishDate.initDate(
+                                jewishYear: 5900,
+                                jewishMonth: 1,
+                                jewishDayOfMonth: 1)
+                            .getGregorianCalendar(),
+                        hebrewFormat: false,
+                        onDateChange: (date) {
+                          print('Date changed: $date');
+                        },
+                        onConfirmDate: (date) {
+                          print('Date confirmed: $date');
+                          jDate.clear();
+                          final jewishDate = JewishDate.fromDateTime(date);
+                          print('asdsadasdasd');
 
-                            gregorianDates.clear();
-                            gregorianDates = myAppController
-                                .generateGregorianDates(jewishDate);
+                          jDate.add(hebrewDateFormatter.format(jewishDate));
+                          jDate.add(date);
+                          print('ergregergerger');
+                          gregorianDates.clear();
+                          for (int i = 1; i <= 10; i++) {
+                            print('in loop');
 
-                            gregorianDates.forEach((item) => print(item));
+                            final isSelectedYearLeap =
+                                jewishDate.isJewishLeapYear();
+                            print('selected leap year');
+                            final jewishMonthSelected =
+                                jewishDate.getJewishMonth();
+                            print('selected jewish month');
+                            final leapYearCheck = JewishDate.initDate(
+                                jewishYear: jewishDate.getJewishYear() + i,
+                                jewishMonth: 1,
+                                jewishDayOfMonth:
+                                    jewishDate.getGregorianDayOfMonth());
+                            print('after leap year check');
+                            print('selected month $jewishMonthSelected');
+                            if (i == 1) {
+                              gregorianDates.add(jDate[1].toString());
+                            }
+                            if (!leapYearCheck.isJewishLeapYear() &&
+                                isSelectedYearLeap &&
+                                jewishMonthSelected == 13) {
+                              print('leap year config');
+                              final month = 12;
+                              final nextYearDate = JewishDate.initDate(
+                                  jewishYear: jewishDate.getJewishYear() + i,
+                                  jewishMonth: month,
+                                  jewishDayOfMonth:
+                                      jewishDate.getJewishDayOfMonth());
+                              gregorianDates.add(nextYearDate
+                                  .getGregorianCalendar()
+                                  .toString());
+                              print(nextYearDate);
+                            } else {
+                              print('leap year config else');
 
-                            setState(() {});
+                              final nextYearDate = JewishDate.initDate(
+                                  jewishYear: jewishDate.getJewishYear() + i,
+                                  jewishMonth: jewishDate.getJewishMonth(),
+                                  jewishDayOfMonth:
+                                      jewishDate.getJewishDayOfMonth());
+                              gregorianDates.add(nextYearDate
+                                  .getGregorianCalendar()
+                                  .toString());
+                              print(nextYearDate);
+                            }
+                          }
 
-                            print(dateTime);
+                          setState(() {
+                            // _selectedDate = date;
                           });
+                        },
+                      );
+                      // showHebrewCupertinoDatePicker(
+                      //     confirmText: "Confirm",
+                      //     initialDate: DateTime.now(),
+                      //     context: context,
+                      //     // Everytime the date is changed, the callback is called
+                      //     onDateChanged: (dateTime) {
+                      //       print(dateTime);
+                      //     },
+                      //     // When the users clicks on the confirm button, the onConfirm callback is called.
+                      //     onConfirm: (dateTime) {
+                      //       print('Confirm');
+
+                      //       final jewishDate =
+                      //           JewishDate.fromDateTime(dateTime);
+                      //       print(jewishDate);
+                      //       jDate.clear();
+                      //       hebrewDateFormatter.hebrewFormat = true;
+                      //       print(jewishDate);
+                      //       print(hebrewDateFormatter.format(jewishDate));
+                      //       jDate.add(hebrewDateFormatter.format(jewishDate));
+                      //       jDate.add(dateTime);
+
+                      //       gregorianDates.clear();
+                      //       gregorianDates = myAppController
+                      //           .generateGregorianDates(jewishDate);
+
+                      //       gregorianDates.forEach((item) => print(item));
+
+                      //       setState(() {});
+
+                      //       print(dateTime);
+                      //     });
                     },
                     child: ListTile(
                       title: Column(
@@ -406,6 +498,7 @@ class _AddPlaqueState extends State<AddPlaque> {
                 ),
                 GestureDetector(
                     onTap: () async {
+                      print('clicked add plaque');
                       var body = {
                         "fullname": fullNameController.text,
                         "gender": _selectedGender,
@@ -420,6 +513,7 @@ class _AddPlaqueState extends State<AddPlaque> {
 
                       print(body);
                       final response = await NetworkCalls().postPlaque(body);
+                      print(" response after adding plaque $response");
                       connectMqttAndSendMessage();
                       if (response.contains('Error:')) {
                         Get.rawSnackbar(

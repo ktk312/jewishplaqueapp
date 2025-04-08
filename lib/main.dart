@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
             },
           ),
           scaffoldBackgroundColor: const Color(0xFF171821),
+          dialogBackgroundColor: Colors.white,
           fontFamily: 'Alef',
           brightness: Brightness.dark),
       home: DashBoard(),
