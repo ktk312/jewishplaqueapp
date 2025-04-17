@@ -135,6 +135,12 @@ class _MessagePageState extends State<MessagePage> {
             fontSize: 18,
           ),
         ),
+        actions: [
+          Text('User ID: ${appController.userId.value}'),
+          SizedBox(
+            width: 10,
+          )
+        ],
         centerTitle: true,
       ),
       body: SizedBox(

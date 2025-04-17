@@ -21,6 +21,7 @@ class MyAppController extends GetxController {
   final femaleList = [].obs;
 
   final isLoggedIn = false.obs;
+  final userId = 0.obs;
 
   final token = ''.obs;
   final isLoginPage = true.obs;

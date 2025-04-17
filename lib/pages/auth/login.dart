@@ -98,6 +98,9 @@ class _LoginPageState extends State<LoginPage> {
                             print(decodedJson['token']);
                             Get.find<MyAppController>().token.value =
                                 decodedJson['token'];
+                            Get.find<MyAppController>().userId.value =
+                                decodedJson['id'];
+
                             Get.find<MyAppController>().isLoggedIn.value = true;
                             Get.offAll(() =>
                                 HomePage(scaffoldKey: widget.scaffoldKey));
