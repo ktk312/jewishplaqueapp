@@ -332,102 +332,102 @@ class _MessagePageState extends State<MessagePage> {
                     child: const CustomCard(child: Text('Save'))),
                 height(context),
                 height(context),
-                SizedBox(
-                  width: Get.size.width,
-                  child: const Text(
-                    'Mqtt Credentials for Led\'s Test',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-                height(context),
-                SizedBox(
-                  width: Get.size.width,
-                  child: const Text(
-                    'Host',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                    height: 35,
-                    child: _getTextField(context, hostController, 'Host')),
-                height(context),
-                SizedBox(
-                  width: Get.size.width,
-                  child: const Text(
-                    'Port (for wss:// protocol)',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                    height: 35,
-                    child: _getTextField(context, portController, 'Port')),
-                height(context),
-                SizedBox(
-                  width: Get.size.width,
-                  child: const Text(
-                    'Username',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                    height: 35,
-                    child:
-                        _getTextField(context, userNameController, 'Username')),
-                height(context),
-                SizedBox(
-                  width: Get.size.width,
-                  child: const Text(
-                    'Password',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                    height: 35,
-                    child:
-                        _getTextField(context, passwordController, 'Password')),
-                height(context),
-                GestureDetector(
-                    onTap: () async {
-                      var body = {
-                        "host": hostController.text,
-                        "port": portController.text,
-                        "username": userNameController.text,
-                        "password": passwordController.text
-                      };
+                // SizedBox(
+                //   width: Get.size.width,
+                //   child: const Text(
+                //     'Mqtt Credentials for Led\'s Test (For Admin Only - Do not change)',
+                //     textAlign: TextAlign.left,
+                //     style: TextStyle(
+                //       fontSize: 18,
+                //     ),
+                //   ),
+                // ),
+                // height(context),
+                // SizedBox(
+                //   width: Get.size.width,
+                //   child: const Text(
+                //     'Host',
+                //     textAlign: TextAlign.left,
+                //     style: TextStyle(
+                //       fontSize: 14,
+                //     ),
+                //   ),
+                // ),
+                // SizedBox(
+                //     height: 35,
+                //     child: _getTextField(context, hostController, 'Host')),
+                // height(context),
+                // SizedBox(
+                //   width: Get.size.width,
+                //   child: const Text(
+                //     'Port (for wss:// protocol)',
+                //     textAlign: TextAlign.left,
+                //     style: TextStyle(
+                //       fontSize: 14,
+                //     ),
+                //   ),
+                // ),
+                // SizedBox(
+                //     height: 35,
+                //     child: _getTextField(context, portController, 'Port')),
+                // height(context),
+                // SizedBox(
+                //   width: Get.size.width,
+                //   child: const Text(
+                //     'Username',
+                //     textAlign: TextAlign.left,
+                //     style: TextStyle(
+                //       fontSize: 14,
+                //     ),
+                //   ),
+                // ),
+                // SizedBox(
+                //     height: 35,
+                //     child:
+                //         _getTextField(context, userNameController, 'Username')),
+                // height(context),
+                // SizedBox(
+                //   width: Get.size.width,
+                //   child: const Text(
+                //     'Password',
+                //     textAlign: TextAlign.left,
+                //     style: TextStyle(
+                //       fontSize: 14,
+                //     ),
+                //   ),
+                // ),
+                // SizedBox(
+                //     height: 35,
+                //     child:
+                //         _getTextField(context, passwordController, 'Password')),
+                // height(context),
+                // GestureDetector(
+                //     onTap: () async {
+                //       var body = {
+                //         "host": hostController.text,
+                //         "port": portController.text,
+                //         "username": userNameController.text,
+                //         "password": passwordController.text
+                //       };
 
-                      final response =
-                          await NetworkCalls().saveCredetials(body);
-                      if (response.contains('Error')) {
-                        Get.rawSnackbar(
-                          message: response,
-                          backgroundColor: Colors.red,
-                        );
-                      }
-                      await getCredentials();
-                      Get.rawSnackbar(
-                        message: 'Credentials Saved Successfully!',
-                        backgroundColor: Colors.green.shade500,
-                      );
-                      // isTesting = false;
-                      setState(() {});
-                    },
-                    child: const CustomCard(child: Text('Save'))),
-                height(context),
+                //       final response =
+                //           await NetworkCalls().saveCredetials(body);
+                //       if (response.contains('Error')) {
+                //         Get.rawSnackbar(
+                //           message: response,
+                //           backgroundColor: Colors.red,
+                //         );
+                //       }
+                //       await getCredentials();
+                //       Get.rawSnackbar(
+                //         message: 'Credentials Saved Successfully!',
+                //         backgroundColor: Colors.green.shade500,
+                //       );
+                //       // isTesting = false;
+                //       setState(() {});
+                //     },
+                //     child: const CustomCard(child: Text('Save'))),
+                // height(context),
               ],
             ),
           ))),

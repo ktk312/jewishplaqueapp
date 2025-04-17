@@ -46,6 +46,7 @@ dependencies:
   pdf: ^3.11.1
   mqtt_client: ^10.5.1
   material_hebrew_date_picker: ^1.0.0+5
+  shared_preferences: ^2.5.3
   # cupertino_hebrew_date_picker: ^0.0.2
 
 dev_dependencies:

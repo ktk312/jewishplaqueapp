@@ -1,18 +1,29 @@
 import 'dart:convert';
 
+import 'package:calendar_dashboard/network/app_controller.dart';
 import 'package:calendar_dashboard/network/mqtt_func.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class NetworkCalls {
   //postrelative
 
+  var headers = {
+    'Authorization': 'Bearer ${Get.find<MyAppController>().token.value}',
+  };
+
   Future<String> postRelative(var body) async {
     String returnString = '';
 
     try {
-      var url = Uri.parse('https://bsdjudaica.com/postRelative.php');
+      var url = Uri.parse('https://bsdjudaica.com/plaq/postRelative.php');
 
-      http.Response res = await http.post(url, body: jsonEncode(body));
+      http.Response res = await http.post(url,
+          headers: {
+            'Authorization':
+                'Bearer ${Get.find<MyAppController>().token.value}',
+          },
+          body: jsonEncode(body));
 
       if (res.statusCode >= 200 && res.statusCode < 300) {
         returnString = res.body;
@@ -32,10 +43,16 @@ class NetworkCalls {
 
     // try {
     print('in postPlaque');
-    var url = Uri.parse('https://bsdjudaica.com/postPlaque.php');
+    var url = Uri.parse('https://bsdjudaica.com/plaq/postPlaque.php');
     print('after uri');
-    http.Response res = await http.post(url, body: jsonEncode(body));
-    print(res);
+    http.Response res = await http.post(url,
+        headers: {
+          'Authorization': 'Bearer ${Get.find<MyAppController>().token.value}',
+        },
+        body: jsonEncode(body));
+    print(res.body);
+    print(res.reasonPhrase);
+
     if (res.statusCode >= 200 && res.statusCode < 300) {
       returnString = res.body;
       MQTTClientWrapper newclient = MQTTClientWrapper();
@@ -52,9 +69,14 @@ class NetworkCalls {
     String returnString = '';
 
     try {
-      var url = Uri.parse('https://bsdjudaica.com/postPlaque.php');
+      var url = Uri.parse('https://bsdjudaica.com/plaq/postPlaque.php');
 
-      http.Response res = await http.get(url);
+      http.Response res = await http.get(
+        url,
+        headers: {
+          'Authorization': 'Bearer ${Get.find<MyAppController>().token.value}',
+        },
+      );
       print(res.statusCode);
 
       if (res.statusCode >= 200 && res.statusCode < 300) {
@@ -74,10 +96,11 @@ class NetworkCalls {
   Future<String> getMessage() async {
     String returnString = '';
     try {
-      var url = Uri.parse('https://bsdjudaica.com/messageapi.php');
+      var url = Uri.parse('https://bsdjudaica.com/plaq/messageapi.php');
       print('here reached');
 
       var req = http.Request('GET', url);
+      req.headers.addAll(headers);
 
       var res = await req.send();
 
@@ -120,10 +143,11 @@ class NetworkCalls {
   Future<String> getAvailableLeds() async {
     String returnString = '';
     try {
-      var url = Uri.parse('https://bsdjudaica.com/getavailable_leds.php');
+      var url = Uri.parse('https://bsdjudaica.com/plaq/getavailable_leds.php');
       print('here reached');
 
       var req = http.Request('GET', url);
+      req.headers.addAll(headers);
 
       var res = await req.send();
 
@@ -163,10 +187,11 @@ class NetworkCalls {
   Future<String> getAllLeds() async {
     String returnString = '';
     try {
-      var url = Uri.parse('https://bsdjudaica.com/getall_leds.php');
+      var url = Uri.parse('https://bsdjudaica.com/plaq/getall_leds.php');
       print('here reached');
 
       var req = http.Request('GET', url);
+      req.headers.addAll(headers);
 
       var res = await req.send();
 
@@ -213,9 +238,10 @@ class NetworkCalls {
 
     // try {
     print('in postPlaque');
-    var url = Uri.parse('https://bsdjudaica.com/messageapi.php');
+    var url = Uri.parse('https://bsdjudaica.com/plaq/messageapi.php');
     print('after uri');
-    http.Response res = await http.post(url, body: jsonEncode(body));
+    http.Response res =
+        await http.post(url, headers: headers, body: jsonEncode(body));
     print(res);
     print(res.body);
     if (res.statusCode >= 200 && res.statusCode < 300) {
@@ -232,11 +258,8 @@ class NetworkCalls {
   Future<String> deletePlaque(String id) async {
     String returnString = '';
 
-    var headers = {
-      'Content-Type': 'application/json',
-    };
     var request = http.Request(
-        'POST', Uri.parse('https://bsdjudaica.com/deletePlaque.php'));
+        'POST', Uri.parse('https://bsdjudaica.com/plaq/deletePlaque.php'));
     request.body = json.encode({"id": id});
     request.headers.addAll(headers);
 
@@ -255,11 +278,8 @@ class NetworkCalls {
   Future<String> deleteRelative(String id) async {
     String returnString = '';
 
-    var headers = {
-      'Content-Type': 'application/json',
-    };
     var request = http.Request(
-        'POST', Uri.parse('https://bsdjudaica.com/deleteRelative.php'));
+        'POST', Uri.parse('https://bsdjudaica.com/plaq/deleteRelative.php'));
     request.body = json.encode({"id": id});
     request.headers.addAll(headers);
 
@@ -280,9 +300,9 @@ class NetworkCalls {
 
     // try {
     print('in post led');
-    var url = Uri.parse('https://bsdjudaica.com/postleds.php');
-    http.Response res = await http.post(url,
-        body: jsonEncode(body), headers: {'Content-Type': 'application/json'});
+    var url = Uri.parse('https://bsdjudaica.com/plaq/postleds.php');
+    http.Response res =
+        await http.post(url, body: jsonEncode(body), headers: headers);
     print(res);
     if (res.statusCode >= 200 && res.statusCode < 300) {
       returnString = res.body;
@@ -299,9 +319,9 @@ class NetworkCalls {
     String returnString = '';
 
     try {
-      var url = Uri.parse('https://bsdjudaica.com/links.php');
+      var url = Uri.parse('https://bsdjudaica.com/plaq/links.php');
 
-      http.Response res = await http.get(url);
+      http.Response res = await http.get(url, headers: headers);
 
       if (res.statusCode >= 200 && res.statusCode < 300) {
         returnString = res.body;
@@ -319,10 +339,10 @@ class NetworkCalls {
 
     // try {
     print('in post led');
-    var url = Uri.parse('https://bsdjudaica.com/links.php');
-    http.Response res = await http.post(url,
-        body: jsonEncode(body), headers: {'Content-Type': 'application/json'});
-    print(res);
+    var url = Uri.parse('https://bsdjudaica.com/plaq/links.php');
+    http.Response res =
+        await http.post(url, body: jsonEncode(body), headers: headers);
+    print(res.body);
     if (res.statusCode >= 200 && res.statusCode < 300) {
       returnString = res.body;
     } else {
@@ -337,9 +357,9 @@ class NetworkCalls {
 
     // try {
     print('in post led');
-    var url = Uri.parse('https://bsdjudaica.com/mqtt.php');
-    http.Response res = await http.post(url,
-        body: jsonEncode(body), headers: {'Content-Type': 'application/json'});
+    var url = Uri.parse('https://bsdjudaica.com/plaq/mqtt.php');
+    http.Response res =
+        await http.post(url, body: jsonEncode(body), headers: headers);
     print(res);
     if (res.statusCode >= 200 && res.statusCode < 300) {
       returnString = res.body;
@@ -354,9 +374,9 @@ class NetworkCalls {
     String returnString = '';
 
     try {
-      var url = Uri.parse('https://bsdjudaica.com/mqtt.php');
+      var url = Uri.parse('https://bsdjudaica.com/plaq/mqtt.php');
 
-      http.Response res = await http.get(url);
+      http.Response res = await http.get(url, headers: headers);
 
       if (res.statusCode >= 200 && res.statusCode < 300) {
         returnString = res.body;
@@ -374,10 +394,9 @@ class NetworkCalls {
 
     // try {
     print('in test led');
-    var url = Uri.parse('https://bsdjudaica.com/testled.php');
-    http.Response res = await http.post(url,
-        body: jsonEncode(body),
-        headers: {'Content-Type': 'application/json', 'Accept': '*/*'});
+    var url = Uri.parse('https://bsdjudaica.com/plaq/testled.php');
+    http.Response res =
+        await http.post(url, body: jsonEncode(body), headers: headers);
     print(res);
     if (res.statusCode >= 200 && res.statusCode < 300) {
       returnString = res.body;

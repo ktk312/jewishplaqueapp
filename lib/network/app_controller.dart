@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 import 'package:kosher_dart/kosher_dart.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class MyAppController extends GetxController {
   final client = Rxn<MqttClient>();
 
@@ -17,6 +19,40 @@ class MyAppController extends GetxController {
 
   final maleList = [].obs;
   final femaleList = [].obs;
+
+  final isLoggedIn = false.obs;
+
+  final token = ''.obs;
+  final isLoginPage = true.obs;
+
+  Future<String> saveToken(String token) async {
+    final prefs = await SharedPreferences.getInstance();
+    final result = await prefs.setString('token', token);
+    if (result) {
+      isLoggedIn(true);
+      return 'success';
+    }
+    isLoggedIn(false);
+    return 'fail';
+  }
+
+  Future<String> getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    if (token != null) {
+      isLoggedIn(true);
+      return token;
+    }
+    isLoggedIn(false);
+    return 'no_token';
+  }
+
+  Future<bool> logout() async {
+    // logout here remove token from prefs
+    final prefs = await SharedPreferences.getInstance();
+    isLoggedIn(false);
+    return await prefs.clear();
+  }
 
   deleteRelative(String id) async {
     final response = await NetworkCalls().deleteRelative(id);

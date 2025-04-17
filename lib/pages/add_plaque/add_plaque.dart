@@ -76,8 +76,8 @@ class _AddPlaqueState extends State<AddPlaque> {
   getAvailableLeds() async {
     List<String> returnList = [];
     final response = await NetworkCalls().getAvailableLeds();
-    print("Response:::: $response");
-    var arrayItems = jsonDecode(response)['availables_leds'];
+    print("Response:::: ${jsonDecode(response)['available_leds']}");
+    var arrayItems = jsonDecode(response)['available_leds'];
     for (var item in arrayItems) {
       returnList.add(item.toString());
     }
