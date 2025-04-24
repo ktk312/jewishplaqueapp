@@ -207,7 +207,7 @@ class _MessagePageState extends State<MessagePage> {
                     child:
                         _getTextField(context, addLedController, 'Enter Led')),
                 height(context),
-                const Text('Format Led: M1-01 for Master and N1-01 for Node'),
+                const Text('Format Led: M1_01 for Master and N1_01 for Node'),
                 height(context),
                 GestureDetector(
                     onTap: () async {
