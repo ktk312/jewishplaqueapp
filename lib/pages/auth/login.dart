@@ -93,17 +93,26 @@ class _LoginPageState extends State<LoginPage> {
                           if (response.statusCode == 200) {
                             final result =
                                 await response.stream.bytesToString();
-                            final decodedJson = jsonDecode(result);
-                            print(result);
-                            print(decodedJson['token']);
-                            Get.find<MyAppController>().token.value =
-                                decodedJson['token'];
-                            Get.find<MyAppController>().userId.value =
-                                decodedJson['id'];
+                            Map<String, dynamic> decodedJson =
+                                jsonDecode(result);
+                            if (decodedJson.keys.contains('error')) {
+                              Get.rawSnackbar(
+                                  message: "Error: Invalid Creentials",
+                                  backgroundColor: Colors.red);
+                            } else {
+                              print(result);
+                              print(decodedJson['token']);
 
-                            Get.find<MyAppController>().isLoggedIn.value = true;
-                            Get.offAll(() =>
-                                HomePage(scaffoldKey: widget.scaffoldKey));
+                              Get.find<MyAppController>().token.value =
+                                  decodedJson['token'];
+                              Get.find<MyAppController>().userId.value =
+                                  decodedJson['id'];
+
+                              Get.find<MyAppController>().isLoggedIn.value =
+                                  true;
+                              Get.offAll(() =>
+                                  HomePage(scaffoldKey: widget.scaffoldKey));
+                            }
                           } else {
                             print(response.reasonPhrase);
                           }
