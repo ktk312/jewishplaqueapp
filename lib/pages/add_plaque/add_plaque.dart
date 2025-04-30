@@ -392,7 +392,7 @@ class _AddPlaqueState extends State<AddPlaque> {
                                 jewishYear: jewishDate.getJewishYear() + i,
                                 jewishMonth: 1,
                                 jewishDayOfMonth:
-                                    jewishDate.getGregorianDayOfMonth());
+                                    jewishDate.getJewishDayOfMonth());
                             print('after leap year check');
                             print('selected month $jewishMonthSelected');
                             if (i == 1) {
