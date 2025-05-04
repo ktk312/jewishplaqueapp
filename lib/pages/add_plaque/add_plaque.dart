@@ -415,9 +415,19 @@ class _AddPlaqueState extends State<AddPlaque> {
                             } else {
                               print('leap year config else');
 
+                              int targetMonth = jewishDate.getJewishMonth();
+
+// If selected year is not a leap year AND selected month is Adar (12),
+// then for future leap years, use Adar II (13) instead of Adar I (12)
+                              if (!isSelectedYearLeap &&
+                                  jewishMonthSelected == 12 &&
+                                  leapYearCheck.isJewishLeapYear()) {
+                                targetMonth = 13; // Adar II
+                              }
+
                               final nextYearDate = JewishDate.initDate(
                                   jewishYear: jewishDate.getJewishYear() + i,
-                                  jewishMonth: jewishDate.getJewishMonth(),
+                                  jewishMonth: targetMonth,
                                   jewishDayOfMonth:
                                       jewishDate.getJewishDayOfMonth());
                               gregorianDates.add(nextYearDate
