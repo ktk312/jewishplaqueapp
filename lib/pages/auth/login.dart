@@ -24,6 +24,12 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
   }
 
+  bool isValidEmail(String email) {
+    final emailRegex =
+        RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
+    return emailRegex.hasMatch(email);
+  }
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
 
@@ -77,44 +83,51 @@ class _LoginPageState extends State<LoginPage> {
                     height(context),
                     GestureDetector(
                         onTap: () async {
-                          var headers = {'Content-Type': 'application/json'};
-                          var request = http.Request(
-                              'POST',
-                              Uri.parse(
-                                  'https://bsdjudaica.com/plaq/auth/login.php'));
-                          request.body = jsonEncode({
-                            "email": emailController.text,
-                            "password": passController.text,
-                          });
-                          request.headers.addAll(headers);
-
-                          http.StreamedResponse response = await request.send();
-
-                          if (response.statusCode == 200) {
-                            final result =
-                                await response.stream.bytesToString();
-                            Map<String, dynamic> decodedJson =
-                                jsonDecode(result);
-                            if (decodedJson.keys.contains('error')) {
-                              Get.rawSnackbar(
-                                  message: "Error: Invalid Creentials",
-                                  backgroundColor: Colors.red);
-                            } else {
-                              print(result);
-                              print(decodedJson['token']);
-
-                              Get.find<MyAppController>().token.value =
-                                  decodedJson['token'];
-                              Get.find<MyAppController>().userId.value =
-                                  decodedJson['id'];
-
-                              Get.find<MyAppController>().isLoggedIn.value =
-                                  true;
-                              Get.offAll(() =>
-                                  HomePage(scaffoldKey: widget.scaffoldKey));
-                            }
+                          if (isValidEmail(emailController.text)) {
+                            Get.rawSnackbar(
+                                message: "Error: Invalid Email",
+                                backgroundColor: Colors.red);
                           } else {
-                            print(response.reasonPhrase);
+                            var headers = {'Content-Type': 'application/json'};
+                            var request = http.Request(
+                                'POST',
+                                Uri.parse(
+                                    'https://bsdjudaica.com/plaq/auth/login.php'));
+                            request.body = jsonEncode({
+                              "email": emailController.text,
+                              "password": passController.text,
+                            });
+                            request.headers.addAll(headers);
+
+                            http.StreamedResponse response =
+                                await request.send();
+
+                            if (response.statusCode == 200) {
+                              final result =
+                                  await response.stream.bytesToString();
+                              Map<String, dynamic> decodedJson =
+                                  jsonDecode(result);
+                              if (decodedJson.keys.contains('error')) {
+                                Get.rawSnackbar(
+                                    message: "Error: Invalid Crdentials",
+                                    backgroundColor: Colors.red);
+                              } else {
+                                print(result);
+                                print(decodedJson['token']);
+
+                                Get.find<MyAppController>().token.value =
+                                    decodedJson['token'];
+                                Get.find<MyAppController>().userId.value =
+                                    decodedJson['id'];
+
+                                Get.find<MyAppController>().isLoggedIn.value =
+                                    true;
+                                Get.offAll(() =>
+                                    HomePage(scaffoldKey: widget.scaffoldKey));
+                              }
+                            } else {
+                              print(response.reasonPhrase);
+                            }
                           }
                         },
                         child: const CustomCard(

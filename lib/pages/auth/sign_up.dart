@@ -24,6 +24,12 @@ class _SignUpPageState extends State<SignUpPage> {
     super.initState();
   }
 
+  bool isValidEmail(String email) {
+    final emailRegex =
+        RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
+    return emailRegex.hasMatch(email);
+  }
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
   TextEditingController nameController = TextEditingController();
@@ -76,38 +82,45 @@ class _SignUpPageState extends State<SignUpPage> {
                     height(context),
                     GestureDetector(
                         onTap: () async {
-                          var headers = {'Content-Type': 'application/json'};
-                          var request = http.Request(
-                              'POST',
-                              Uri.parse(
-                                  'https://bsdjudaica.com/plaq/auth/signup.php'));
-                          request.body = jsonEncode({
-                            "name": nameController.text,
-                            "email": emailController.text,
-                            "password": passController.text,
-                          });
-                          request.headers.addAll(headers);
-
-                          http.StreamedResponse response = await request.send();
-
-                          if (response.statusCode == 200) {
-                            final result =
-                                await response.stream.bytesToString();
-                            final decodedJson = jsonDecode(result);
-                            print(result);
-                            if (decodedJson['message'] ==
-                                "User registered successfully") {
-                              Get.find<MyAppController>().isLoginPage.value =
-                                  true;
-                            }
-                            // Get.find<MyAppController>().token.value =
-                            //     decodedJson['token'];
-                            // Get.find<MyAppController>().isLoggedIn.value = true;
-
-                            // Get.offAll(() =>
-                            //     HomePage(scaffoldKey: widget.scaffoldKey));
+                          if (isValidEmail(emailController.text)) {
+                            Get.snackbar(
+                                'Error', 'Please enter a valid email address');
+                            return;
                           } else {
-                            print(response.reasonPhrase);
+                            var headers = {'Content-Type': 'application/json'};
+                            var request = http.Request(
+                                'POST',
+                                Uri.parse(
+                                    'https://bsdjudaica.com/plaq/auth/signup.php'));
+                            request.body = jsonEncode({
+                              "name": nameController.text,
+                              "email": emailController.text,
+                              "password": passController.text,
+                            });
+                            request.headers.addAll(headers);
+
+                            http.StreamedResponse response =
+                                await request.send();
+
+                            if (response.statusCode == 200) {
+                              final result =
+                                  await response.stream.bytesToString();
+                              final decodedJson = jsonDecode(result);
+                              print(result);
+                              if (decodedJson['message'] ==
+                                  "User registered successfully") {
+                                Get.find<MyAppController>().isLoginPage.value =
+                                    true;
+                              }
+                              // Get.find<MyAppController>().token.value =
+                              //     decodedJson['token'];
+                              // Get.find<MyAppController>().isLoggedIn.value = true;
+
+                              // Get.offAll(() =>
+                              //     HomePage(scaffoldKey: widget.scaffoldKey));
+                            } else {
+                              print(response.reasonPhrase);
+                            }
                           }
                         },
                         child: const CustomCard(
