@@ -82,7 +82,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     height(context),
                     GestureDetector(
                         onTap: () async {
-                          if (isValidEmail(emailController.text)) {
+                          if (!isValidEmail(emailController.text)) {
                             Get.snackbar(
                                 'Error', 'Please enter a valid email address');
                             return;

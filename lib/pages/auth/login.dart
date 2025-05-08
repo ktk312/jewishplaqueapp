@@ -25,8 +25,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   bool isValidEmail(String email) {
-    final emailRegex =
-        RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
+    final emailRegex = RegExp(
+        r"^(?!\.)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?<!\.)$");
     return emailRegex.hasMatch(email);
   }
 
@@ -83,11 +83,14 @@ class _LoginPageState extends State<LoginPage> {
                     height(context),
                     GestureDetector(
                         onTap: () async {
-                          if (isValidEmail(emailController.text)) {
+                          print('Login');
+                          if (!isValidEmail(emailController.text)) {
+                            print('Login error');
                             Get.rawSnackbar(
                                 message: "Error: Invalid Email",
                                 backgroundColor: Colors.red);
                           } else {
+                            print('Login else');
                             var headers = {'Content-Type': 'application/json'};
                             var request = http.Request(
                                 'POST',
@@ -109,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                                   jsonDecode(result);
                               if (decodedJson.keys.contains('error')) {
                                 Get.rawSnackbar(
-                                    message: "Error: Invalid Crdentials",
+                                    message: "Error: Invalid Credentials",
                                     backgroundColor: Colors.red);
                               } else {
                                 print(result);

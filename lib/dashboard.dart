@@ -1,4 +1,5 @@
 import 'package:calendar_dashboard/network/app_controller.dart';
+import 'package:calendar_dashboard/pages/admin/admin.dart';
 import 'package:calendar_dashboard/pages/auth/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_dashboard/pages/home/home_page.dart';
@@ -61,7 +62,8 @@ class _DashBoardState extends State<DashBoard> {
                           flex: 1,
                           child: myAppController.token.value == ''
                               ? myAppController.isLoginPage.value
-                                  ? LoginPage(scaffoldKey: _scaffoldKey)
+                                  ? AdminPage()
+                                  // LoginPage(scaffoldKey: _scaffoldKey)
                                   : SignUpPage(scaffoldKey: _scaffoldKey)
                               : HomePage(scaffoldKey: _scaffoldKey)),
                     ),

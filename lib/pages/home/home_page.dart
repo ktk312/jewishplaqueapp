@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:calendar_dashboard/network/app_controller.dart';
 import 'package:calendar_dashboard/network/mqtt_func.dart';
 import 'package:calendar_dashboard/pages/add_plaque/add_plaque.dart';
+import 'package:calendar_dashboard/pages/admin/admin.dart';
 import 'package:calendar_dashboard/pages/home/plaque_detail_page.dart';
 import 'package:calendar_dashboard/pages/message_page.dart';
 import 'package:calendar_dashboard/pages/print_page.dart';
@@ -71,6 +72,17 @@ class _HomePageState extends State<HomePage> {
         ),
         // centerTitle: true,
         actions: [
+          TextButton(
+            onPressed: () {
+              Get.to(() => const AdminPage());
+            },
+            child: const Text(
+              'Admin',
+            ),
+          ),
+          const SizedBox(
+            width: 20,
+          ),
           TextButton(
             onPressed: () {
               connectMqttAndSendMessage();
