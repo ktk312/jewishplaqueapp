@@ -2,10 +2,8 @@ import 'dart:convert';
 
 import 'package:calendar_dashboard/const.dart';
 import 'package:calendar_dashboard/network/app_controller.dart';
-import 'package:calendar_dashboard/network/mqtt_func.dart';
 import 'package:calendar_dashboard/network/network_calls.dart';
-import 'package:calendar_dashboard/pages/add_plaque/add_plaque.dart';
-import 'package:calendar_dashboard/pages/home/plaque_detail_page.dart';
+
 import 'package:calendar_dashboard/widgets/custom_card.dart';
 
 import 'package:flutter/material.dart';
@@ -25,6 +23,8 @@ class AdminPage extends StatefulWidget {
 class _AdminPageState extends State<AdminPage> {
   final appController = Get.find<MyAppController>();
 
+  final isLoadingUser = false.obs;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -38,6 +38,27 @@ class _AdminPageState extends State<AdminPage> {
     'Item 4',
     'Item 5',
   ];
+
+  var allUsersList = [
+    'User 1',
+    'User 2',
+    'User 3',
+    'User 4',
+    'User 5',
+  ];
+
+  getAllUsers() async {
+    List<String> returnList = [];
+    // final response = await NetworkCalls().getAllUsers();
+    // print("Response:::: $response");
+    // var arrayItems = jsonDecode(response)['users'];
+    // for (var item in arrayItems) {
+    // returnList.add(item.toString());
+    // }
+    // allUsersList = returnList;
+
+    setState(() {});
+  }
 
   getAllLeds() async {
     List<String> returnList = [];
@@ -135,16 +156,23 @@ class _AdminPageState extends State<AdminPage> {
                                 ListView.builder(
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: 50,
+                                  itemCount: allUsersList.length,
                                   itemBuilder: (context, index) {
                                     return GestureDetector(
-                                      onTap: () {},
+                                      onTap: () {
+                                        print('pressed');
+                                        isLoadingUser.value = true;
+                                        Future.delayed(Duration(seconds: 2),
+                                            () {
+                                          isLoadingUser.value = false;
+                                        });
+                                      },
                                       child: Container(
                                         margin: const EdgeInsets.only(
                                           bottom: 10,
                                         ),
                                         child: CustomCard(
-                                          child: Text('Hello'),
+                                          child: Text(allUsersList[index]),
                                         ),
                                       ),
                                     );
@@ -157,88 +185,102 @@ class _AdminPageState extends State<AdminPage> {
                     SizedBox(
                       width: 20,
                     ),
-                    Expanded(
-                      flex: 4,
-                      child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          // width: Get.size.width,
-                          height: Get.size.height - 120,
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                const Text(
-                                  'Users List',
-                                  style: TextStyle(
-                                    fontSize: 18,
+                    Obx(
+                      () => isLoadingUser.value
+                          ? Expanded(
+                              flex: 4,
+                              child: Center(
+                                  child: const CircularProgressIndicator()))
+                          : Expanded(
+                              flex: 4,
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                ),
-                                height(context),
-                                SizedBox(
-                                  width: Get.size.width,
-                                  child: const Text(
-                                    'Add Leds',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                    height: 35,
-                                    child: _getTextField(context,
-                                        addLedController, 'Enter Led')),
-                                height(context),
-                                const Text(
-                                    'Format Led: M1_01 for Master and N1_01 for Node'),
-                                height(context),
-                                GestureDetector(
-                                    onTap: () async {
-                                      //post led call
-                                      var body = {
-                                        "led_number": addLedController.text
-                                      };
-                                      print(body);
+                                  // width: Get.size.width,
+                                  height: Get.size.height - 120,
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        const Text(
+                                          'Users List',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                        height(context),
+                                        SizedBox(
+                                          width: Get.size.width,
+                                          child: const Text(
+                                            'Add Leds',
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                            height: 35,
+                                            child: _getTextField(context,
+                                                addLedController, 'Enter Led')),
+                                        height(context),
+                                        const Text(
+                                            'Format Led: M1_01 for Master and N1_01 for Node'),
+                                        height(context),
+                                        GestureDetector(
+                                            onTap: () async {
+                                              //post led call
+                                              var body = {
+                                                "led_number":
+                                                    addLedController.text,
+                                                "user_id": '1',
+                                              };
+                                              print(body);
 
-                                      final response =
-                                          await NetworkCalls().postLed(body);
-                                      if (response.contains('Error')) {
-                                        Get.rawSnackbar(
-                                          message: response,
-                                          backgroundColor: Colors.red,
-                                        );
-                                      }
-                                      Get.rawSnackbar(
-                                        message: 'Message Saved Successfully!',
-                                        backgroundColor: Colors.green.shade500,
-                                      );
-                                      getAllLeds();
-                                    },
-                                    child: const CustomCard(
-                                        child: Text('Save Led'))),
-                                height(context),
-                                ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: allLedsList.length,
-                                  itemBuilder: (context, index) {
-                                    return GestureDetector(
-                                      onTap: () {},
-                                      child: Container(
-                                        margin: const EdgeInsets.only(
-                                          bottom: 10,
+                                              final response =
+                                                  await NetworkCalls()
+                                                      .postLed(body);
+                                              if (response.contains('Error')) {
+                                                Get.rawSnackbar(
+                                                  message: response,
+                                                  backgroundColor: Colors.red,
+                                                );
+                                              }
+                                              Get.rawSnackbar(
+                                                message:
+                                                    'Message Saved Successfully!',
+                                                backgroundColor:
+                                                    Colors.green.shade500,
+                                              );
+                                              getAllLeds();
+                                            },
+                                            child: const CustomCard(
+                                                child: Text('Save Led'))),
+                                        height(context),
+                                        ListView.builder(
+                                          shrinkWrap: true,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          itemCount: allLedsList.length,
+                                          itemBuilder: (context, index) {
+                                            return GestureDetector(
+                                              onTap: () {},
+                                              child: Container(
+                                                margin: const EdgeInsets.only(
+                                                  bottom: 10,
+                                                ),
+                                                child: CustomCard(
+                                                  child:
+                                                      Text(allLedsList[index]),
+                                                ),
+                                              ),
+                                            );
+                                          },
                                         ),
-                                        child: CustomCard(
-                                          child: Text(allLedsList[index]),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ],
+                                      ],
+                                    ),
+                                  )),
                             ),
-                          )),
                     ),
                   ],
                 ),
