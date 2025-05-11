@@ -26,6 +26,8 @@ class MyAppController extends GetxController {
   final token = ''.obs;
   final isLoginPage = true.obs;
 
+  final userEmail = ''.obs;
+
   Future<String> saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
     final result = await prefs.setString('token', token);

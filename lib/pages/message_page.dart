@@ -192,44 +192,44 @@ class _MessagePageState extends State<MessagePage> {
                     },
                     child: const CustomCard(child: Text('Save Message'))),
                 height(context),
-                SizedBox(
-                  width: Get.size.width,
-                  child: const Text(
-                    'Add Leds',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                    height: 35,
-                    child:
-                        _getTextField(context, addLedController, 'Enter Led')),
-                height(context),
-                const Text('Format Led: M1_01 for Master and N1_01 for Node'),
-                height(context),
-                GestureDetector(
-                    onTap: () async {
-                      //post led call
-                      var body = {"led_number": addLedController.text};
-                      print(body);
+                // SizedBox(
+                //   width: Get.size.width,
+                //   child: const Text(
+                //     'Add Leds',
+                //     textAlign: TextAlign.left,
+                //     style: TextStyle(
+                //       fontSize: 18,
+                //     ),
+                //   ),
+                // ),
+                // SizedBox(
+                //     height: 35,
+                //     child:
+                //         _getTextField(context, addLedController, 'Enter Led')),
+                // height(context),
+                // const Text('Format Led: M1_01 for Master and N1_01 for Node'),
+                // height(context),
+                // GestureDetector(
+                //     onTap: () async {
+                //       //post led call
+                //       var body = {"led_number": addLedController.text};
+                //       print(body);
 
-                      final response = await NetworkCalls().postLed(body);
-                      if (response.contains('Error')) {
-                        Get.rawSnackbar(
-                          message: response,
-                          backgroundColor: Colors.red,
-                        );
-                      }
-                      Get.rawSnackbar(
-                        message: 'Message Saved Successfully!',
-                        backgroundColor: Colors.green.shade500,
-                      );
-                      getAllLeds();
-                    },
-                    child: const CustomCard(child: Text('Save Led'))),
-                height(context),
+                //       final response = await NetworkCalls().postLed(body);
+                //       if (response.contains('Error')) {
+                //         Get.rawSnackbar(
+                //           message: response,
+                //           backgroundColor: Colors.red,
+                //         );
+                //       }
+                //       Get.rawSnackbar(
+                //         message: 'Message Saved Successfully!',
+                //         backgroundColor: Colors.green.shade500,
+                //       );
+                //       getAllLeds();
+                //     },
+                //     child: const CustomCard(child: Text('Save Led'))),
+                // height(context),
                 SizedBox(
                   width: Get.size.width,
                   child: const Text(

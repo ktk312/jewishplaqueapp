@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:calendar_dashboard/const.dart';
 import 'package:calendar_dashboard/network/app_controller.dart';
+import 'package:calendar_dashboard/pages/admin/admin.dart';
 import 'package:calendar_dashboard/pages/home/home_page.dart';
 import 'package:calendar_dashboard/responsive.dart';
 import 'package:calendar_dashboard/widgets/custom_card.dart';
@@ -122,11 +123,17 @@ class _LoginPageState extends State<LoginPage> {
                                     decodedJson['token'];
                                 Get.find<MyAppController>().userId.value =
                                     decodedJson['id'];
-
+                                Get.find<MyAppController>().userEmail.value =
+                                    emailController.text;
                                 Get.find<MyAppController>().isLoggedIn.value =
                                     true;
-                                Get.offAll(() =>
-                                    HomePage(scaffoldKey: widget.scaffoldKey));
+
+                                if (emailController.text == 'admin@email.com') {
+                                  Get.offAll(() => AdminPage());
+                                } else {
+                                  Get.offAll(() => HomePage(
+                                      scaffoldKey: widget.scaffoldKey));
+                                }
                               }
                             } else {
                               print(response.reasonPhrase);

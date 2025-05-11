@@ -72,14 +72,16 @@ class _HomePageState extends State<HomePage> {
         ),
         // centerTitle: true,
         actions: [
-          TextButton(
-            onPressed: () {
-              Get.to(() => const AdminPage());
-            },
-            child: const Text(
-              'Admin',
-            ),
-          ),
+          appController.userEmail.value == 'admin@email.com'
+              ? TextButton(
+                  onPressed: () {
+                    Get.to(() => const AdminPage());
+                  },
+                  child: const Text(
+                    'Admin',
+                  ),
+                )
+              : Container(),
           const SizedBox(
             width: 20,
           ),
