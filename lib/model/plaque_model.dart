@@ -69,6 +69,7 @@ class Relative {
   String relativeid;
   String email;
   String number;
+  String? isSms;
 
   Relative({
     required this.id,
@@ -76,6 +77,7 @@ class Relative {
     required this.relativeid,
     required this.email,
     required this.number,
+    required this.isSms,
   });
 
   factory Relative.fromJson(Map<String, dynamic> json) => Relative(
@@ -84,6 +86,7 @@ class Relative {
         relativeid: json["relativeid"],
         email: json["email"],
         number: json["number"],
+        isSms: json["isSms"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -92,5 +95,6 @@ class Relative {
         "relativeid": relativeid,
         "email": email,
         "number": number,
+        "isSms": isSms,
       };
 }

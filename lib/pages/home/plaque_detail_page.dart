@@ -259,11 +259,29 @@ class _PlaqueDetailPageState extends State<PlaqueDetailPage> {
                                       .relatives[index].relativeFullname
                                   : appController.femaleList[widget.index]
                                       .relatives[index].relativeFullname),
-                              Text(widget.isMale
-                                  ? appController.maleList[widget.index]
-                                      .relatives[index].number
-                                  : appController.femaleList[widget.index]
-                                      .relatives[index].number),
+                              Row(
+                                children: [
+                                  Text(widget.isMale
+                                      ? appController.maleList[widget.index]
+                                                  .relatives[index].isSms ==
+                                              "0"
+                                          ? "Whatsapp"
+                                          : "SMS"
+                                      : appController.femaleList[widget.index]
+                                                  .relatives[index].isSms ==
+                                              "0"
+                                          ? "Whatsapp"
+                                          : "SMS"),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(widget.isMale
+                                      ? appController.maleList[widget.index]
+                                          .relatives[index].number
+                                      : appController.femaleList[widget.index]
+                                          .relatives[index].number),
+                                ],
+                              ),
                             ],
                           ),
                         ),

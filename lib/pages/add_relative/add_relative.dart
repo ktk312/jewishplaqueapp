@@ -27,6 +27,8 @@ class _AddRelativeState extends State<AddRelative> {
     super.initState();
   }
 
+  bool isSms = true;
+
   @override
   Widget build(BuildContext context) {
     SizedBox height(BuildContext context) => SizedBox(
@@ -61,16 +63,41 @@ class _AddRelativeState extends State<AddRelative> {
                         context, fullNameController, 'Full Name',
                         keyboardType: TextInputType.name)),
                 height(context),
-                // Container(
-                //     height: 35,
-                //     child: _getTextField(context, emailController, 'Email',
-                //         keyboardType: TextInputType.emailAddress)),
-                // _height(context),
                 SizedBox(
                     height: 35,
                     child: _getTextField(context, phoneController, 'Phone',
                         keyboardType: TextInputType.phone)),
                 height(context),
+                SizedBox(
+                    height: 35,
+                    child: Row(
+                      children: [
+                        Text(
+                          'Whatsapp',
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Switch(
+                            value: isSms,
+                            onChanged: (val) {
+                              isSms = val;
+                              setState(() {});
+                            }),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          'SMS',
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                      ],
+                    )),
                 height(context),
                 GestureDetector(
                     onTap: () async {
@@ -79,6 +106,7 @@ class _AddRelativeState extends State<AddRelative> {
                         'relativeid': widget.plaqueId,
                         'email': 'test@gmail.com',
                         'number': phoneController.text,
+                        'isSms': isSms,
                       };
 
                       final response = await NetworkCalls().postRelative(body);
