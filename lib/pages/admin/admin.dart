@@ -4,6 +4,7 @@ import 'package:calendar_dashboard/const.dart';
 import 'package:calendar_dashboard/model/user_model.dart';
 import 'package:calendar_dashboard/network/app_controller.dart';
 import 'package:calendar_dashboard/network/network_calls.dart';
+import 'package:calendar_dashboard/pages/auth/sign_up.dart';
 
 import 'package:calendar_dashboard/widgets/custom_card.dart';
 
@@ -158,6 +159,18 @@ class _AdminPageState extends State<AdminPage> {
             fontSize: 18,
           ),
         ),
+        actions: [
+          GestureDetector(
+              onTap: () async {
+                //post led call
+                await Get.to(() => SignUpPage());
+                getUsers();
+              },
+              child: const CustomCard(child: Text('Add User'))),
+          SizedBox(
+            width: 40,
+          )
+        ],
         // centerTitle: true,
       ),
       body: SizedBox(

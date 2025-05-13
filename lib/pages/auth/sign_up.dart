@@ -10,9 +10,11 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class SignUpPage extends StatefulWidget {
-  final GlobalKey<ScaffoldState> scaffoldKey;
+  // final GlobalKey<ScaffoldState> scaffoldKey;
 
-  const SignUpPage({super.key, required this.scaffoldKey});
+  const SignUpPage({
+    super.key,
+  });
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
@@ -56,7 +58,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 height(context),
                 const Text(
-                  'Sign Up',
+                  'Add User',
                   style: TextStyle(
                     fontSize: 18,
                   ),
@@ -76,97 +78,87 @@ class _SignUpPageState extends State<SignUpPage> {
                     SizedBox(
                         height: 35,
                         child: _getTextField(
-                            context, passController, 'Password',
-                            isPassword: true)),
+                          context,
+                          passController,
+                          'Password',
+                        )),
                     height(context),
                     height(context),
-                    GestureDetector(
-                        onTap: () async {
-                          if (!isValidEmail(emailController.text)) {
-                            Get.snackbar(
-                                'Error', 'Please enter a valid email address');
-                            return;
-                          } else {
-                            var headers = {'Content-Type': 'application/json'};
-                            var request = http.Request(
-                                'POST',
-                                Uri.parse(
-                                    'https://bsdjudaica.com/plaq/auth/signup.php'));
-                            request.body = jsonEncode({
-                              "name": nameController.text,
-                              "email": emailController.text,
-                              "password": passController.text,
-                            });
-                            request.headers.addAll(headers);
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                            onTap: () async {
+                              if (!isValidEmail(emailController.text)) {
+                                Get.snackbar('Error',
+                                    'Please enter a valid email address');
+                                return;
+                              } else {
+                                var headers = {
+                                  'Content-Type': 'application/json'
+                                };
+                                var request = http.Request(
+                                    'POST',
+                                    Uri.parse(
+                                        'https://bsdjudaica.com/plaq/auth/signup.php'));
+                                request.body = jsonEncode({
+                                  "name": nameController.text,
+                                  "email": emailController.text,
+                                  "password": passController.text,
+                                });
+                                request.headers.addAll(headers);
 
-                            http.StreamedResponse response =
-                                await request.send();
+                                http.StreamedResponse response =
+                                    await request.send();
 
-                            if (response.statusCode == 200) {
-                              final result =
-                                  await response.stream.bytesToString();
-                              final decodedJson = jsonDecode(result);
-                              print(result);
-                              if (decodedJson['message'] ==
-                                  "User registered successfully") {
-                                Get.find<MyAppController>().isLoginPage.value =
-                                    true;
+                                if (response.statusCode == 200) {
+                                  final result =
+                                      await response.stream.bytesToString();
+                                  final decodedJson = jsonDecode(result);
+                                  print(result);
+                                  if (decodedJson['message'] ==
+                                      "User registered successfully") {
+                                    Get.back();
+                                  }
+                                } else {
+                                  print(response.reasonPhrase);
+                                }
                               }
-                              // Get.find<MyAppController>().token.value =
-                              //     decodedJson['token'];
-                              // Get.find<MyAppController>().isLoggedIn.value = true;
-
-                              // Get.offAll(() =>
-                              //     HomePage(scaffoldKey: widget.scaffoldKey));
-                            } else {
-                              print(response.reasonPhrase);
-                            }
-                          }
-                        },
-                        child: const CustomCard(
-                          child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: 20, right: 20, top: 5, bottom: 5),
-                              child: Text(
-                                'Sign Up',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  // ),
-                                ),
-                              )),
-                        )),
-                  ],
-                ),
-                height(context),
-                height(context),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Already have an account? ',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
+                            },
+                            child: const CustomCard(
+                              child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 20, right: 20, top: 5, bottom: 5),
+                                  child: Text(
+                                    'Sign Up',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      // ),
+                                    ),
+                                  )),
+                            )),
+                        SizedBox(
+                          width: 40,
+                        ),
+                        GestureDetector(
+                            onTap: () async {
+                              Get.back();
+                            },
+                            child: const CustomCard(
+                              child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 20, right: 20, top: 5, bottom: 5),
+                                  child: Text(
+                                    'Cancel',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      // ),
+                                    ),
+                                  )),
+                            )),
+                      ],
                     ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    GestureDetector(
-                        onTap: () async {
-                          Get.find<MyAppController>().isLoginPage.value = true;
-                        },
-                        child: const CustomCard(
-                          child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: 20, right: 20, top: 5, bottom: 5),
-                              child: Text(
-                                'Login',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  // ),
-                                ),
-                              )),
-                        )),
                   ],
                 ),
               ],

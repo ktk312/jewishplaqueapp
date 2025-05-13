@@ -61,12 +61,7 @@ class _DashBoardState extends State<DashBoard> {
                       () => Expanded(
                           flex: 1,
                           child: myAppController.token.value == ''
-                              ? myAppController.isLoginPage.value
-                                  ?
-                                  //admin123##
-                                  // AdminPage()
-                                  LoginPage(scaffoldKey: _scaffoldKey)
-                                  : SignUpPage(scaffoldKey: _scaffoldKey)
+                              ? LoginPage(scaffoldKey: _scaffoldKey)
                               : HomePage(scaffoldKey: _scaffoldKey)),
                     ),
             ],

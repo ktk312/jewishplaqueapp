@@ -155,37 +155,6 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
                 height(context),
-                height(context),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Don\'t have an account? ',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    GestureDetector(
-                        onTap: () async {
-                          Get.find<MyAppController>().isLoginPage.value = false;
-                        },
-                        child: const CustomCard(
-                          child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: 20, right: 20, top: 5, bottom: 5),
-                              child: Text(
-                                'Sign Up',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  // ),
-                                ),
-                              )),
-                        )),
-                  ],
-                ),
               ],
             ),
           )),

@@ -24,7 +24,6 @@ class MyAppController extends GetxController {
   final userId = 0.obs;
 
   final token = ''.obs;
-  final isLoginPage = true.obs;
 
   final userEmail = ''.obs;
 
