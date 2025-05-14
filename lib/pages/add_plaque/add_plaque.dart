@@ -372,14 +372,53 @@ class _AddPlaqueState extends State<AddPlaque> {
                         onConfirmDate: (date) {
                           print('Date confirmed: $date');
                           jDate.clear();
-                          final jewishDate = JewishDate.fromDateTime(date);
+                          print('Date confirmed: $date');
+                          jDate.clear();
+
+                          final selectedJewishDate =
+                              JewishDate.fromDateTime(date);
+                          final today = DateTime.now();
+                          final todayTruncated = DateTime(today.year,
+                              today.month, today.day); // remove time component
+
+                          int candidateYear =
+                              JewishDate.fromDateTime(today).getJewishYear();
+
+                          JewishDate candidateJewishDate = JewishDate.initDate(
+                            jewishYear: candidateYear,
+                            jewishMonth: selectedJewishDate.getJewishMonth(),
+                            jewishDayOfMonth:
+                                selectedJewishDate.getJewishDayOfMonth(),
+                          );
+
+                          final candidateGregorian =
+                              candidateJewishDate.getGregorianCalendar();
+                          final candidateTruncated = DateTime(
+                            candidateGregorian.year,
+                            candidateGregorian.month,
+                            candidateGregorian.day,
+                          );
+
+// 🔍 Check: if candidate is today or later, use it; else, go to next year
+                          if (candidateTruncated.isBefore(todayTruncated)) {
+                            candidateYear += 1;
+
+                            candidateJewishDate = JewishDate.initDate(
+                              jewishYear: candidateYear,
+                              jewishMonth: selectedJewishDate.getJewishMonth(),
+                              jewishDayOfMonth:
+                                  selectedJewishDate.getJewishDayOfMonth(),
+                            );
+                          }
+
+                          final jewishDate = candidateJewishDate;
                           print('asdsadasdasd');
 
                           jDate.add(hebrewDateFormatter.format(jewishDate));
                           jDate.add(date);
                           print('ergregergerger');
                           gregorianDates.clear();
-                          for (int i = 1; i <= 10; i++) {
+                          for (int i = 0; i <= 10; i++) {
                             print('in loop');
 
                             final isSelectedYearLeap =
