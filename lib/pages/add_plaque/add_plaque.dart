@@ -434,9 +434,9 @@ class _AddPlaqueState extends State<AddPlaque> {
                                     jewishDate.getJewishDayOfMonth());
                             print('after leap year check');
                             print('selected month $jewishMonthSelected');
-                            if (i == 1) {
-                              gregorianDates.add(jDate[1].toString());
-                            }
+                            // if (i == 1) {
+                            //   gregorianDates.add(jDate[1].toString());
+                            // }
                             if (!leapYearCheck.isJewishLeapYear() &&
                                 isSelectedYearLeap &&
                                 jewishMonthSelected == 13) {
@@ -469,12 +469,17 @@ class _AddPlaqueState extends State<AddPlaque> {
                                   jewishMonth: targetMonth,
                                   jewishDayOfMonth:
                                       jewishDate.getJewishDayOfMonth());
+
                               gregorianDates.add(nextYearDate
                                   .getGregorianCalendar()
                                   .toString());
                               print(nextYearDate);
                             }
                           }
+
+                          gregorianDates.forEach((element) {
+                            print(element);
+                          });
 
                           setState(() {
                             // _selectedDate = date;
