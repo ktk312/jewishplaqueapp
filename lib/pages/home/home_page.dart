@@ -290,8 +290,8 @@ class PlaqueListWidget extends StatelessWidget {
                     Text(
                       hebrewDateFormatter.format(JewishDate.fromDateTime(
                           DateTime.tryParse(isMale
-                              ? appController.maleList[index].dod
-                              : appController.femaleList[index].dod)!)),
+                              ? appController.maleList[index].predate
+                              : appController.femaleList[index].predate)!)),
                       style: const TextStyle(
                         fontFamily: 'Alef',
                       ),

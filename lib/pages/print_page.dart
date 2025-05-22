@@ -33,6 +33,7 @@ class _PrintPageState extends State<PrintPage> {
   void initState() {
     super.initState();
     plaqueList = appController.plaqueList;
+    followingWeek();
     hebrewDateFormatter.hebrewFormat = true;
   }
 
@@ -44,21 +45,30 @@ class _PrintPageState extends State<PrintPage> {
     setState(() {});
   }
 
-  followingWeek() {
-    // Calculate start and end of next week
-    DateTime tomorrow = now.add(Duration(days: 1));
-    DateTime nextWeekStart = tomorrow;
-    DateTime nextWeekEnd = tomorrow.add(Duration(days: 7));
+  void followingWeek() {
+    DateTime now = DateTime.now();
+    DateTime today = DateTime(now.year, now.month, now.day);
 
-    // Filter PlaqueModels where dod is within next week
-    List<PlaqueModel> nextWeekPlaques =
-        appController.plaqueList.where((plaque) {
-      DateTime dodDate =
-          DateTime.parse(plaque.dod); // Assuming dod is in ISO 8601 format
-      return dodDate.isAfter(nextWeekStart) && dodDate.isBefore(nextWeekEnd);
+    // Calculate the most recent Friday (including today if Friday)
+    int daysSinceFriday = (today.weekday - DateTime.friday + 7) % 7;
+    DateTime currentFriday = today.subtract(Duration(days: daysSinceFriday));
+
+    // If today is Friday and it's NOT the same as the currentFriday, move to today
+    if (today.weekday == DateTime.friday && today.isAfter(currentFriday)) {
+      currentFriday = today;
+    }
+
+    // Define the 9-day range: Friday to next Sunday (inclusive)
+    DateTime rangeStart = currentFriday;
+    DateTime rangeEnd =
+        rangeStart.add(Duration(days: 9)); // Exclusive of this date
+
+    List<PlaqueModel> nineDayPlaques = appController.plaqueList.where((plaque) {
+      DateTime dodDate = DateTime.parse(plaque.dod);
+      return !dodDate.isBefore(rangeStart) && dodDate.isBefore(rangeEnd);
     }).toList();
 
-    plaqueList = nextWeekPlaques;
+    plaqueList = nineDayPlaques;
     setState(() {});
   }
 

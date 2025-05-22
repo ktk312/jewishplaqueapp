@@ -559,7 +559,7 @@ class _AddPlaqueState extends State<AddPlaque> {
                         "dob": 'not needed',
                         "dod": jDate[1].toString(),
                         "jdate": jDate[0].toString(),
-                        "predate": gregorianDates.first,
+                        "predate": jDate[1].toString(),
                         "led": dropdownvalue.value,
                         "hebruname": hebrewNameController.text,
                         "dateList": jsonEncode(gregorianDates)
