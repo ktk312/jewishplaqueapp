@@ -37,6 +37,7 @@ class _AdminPageState extends State<AdminPage> {
 
   String sID = '';
   String number = '';
+  String token = "";
 
   @override
   void initState() {
@@ -95,8 +96,10 @@ class _AdminPageState extends State<AdminPage> {
       final decodedJson = jsonDecode(resBody);
       sID = decodedJson['data']['sid'];
       number = decodedJson['data']['twilloNumber'];
+      token = decodedJson['data']['token'];
       sidController.text = sID;
       numberController.text = number;
+      tokenController.text = token;
       setState(() {});
     } else {
       print(res.reasonPhrase);
@@ -178,6 +181,7 @@ class _AdminPageState extends State<AdminPage> {
   TextEditingController addLedController = TextEditingController();
   TextEditingController sidController = TextEditingController();
   TextEditingController numberController = TextEditingController();
+  TextEditingController tokenController = TextEditingController();
 
   HebrewDateFormatter hebrewDateFormatter = HebrewDateFormatter();
   @override
@@ -340,6 +344,13 @@ class _AdminPageState extends State<AdminPage> {
                                                           numberController,
                                                           'Number')),
                                                   height(context),
+                                                  SizedBox(
+                                                      height: 35,
+                                                      child: _getTextField(
+                                                          context,
+                                                          tokenController,
+                                                          'Token')),
+                                                  height(context),
 
                                                   GestureDetector(
                                                       onTap: () async {
@@ -358,8 +369,9 @@ class _AdminPageState extends State<AdminPage> {
                                                               selectedUserId,
                                                           "sid": sidController
                                                               .text,
-                                                          "token": appController
-                                                              .token.value,
+                                                          "token":
+                                                              tokenController
+                                                                  .text,
                                                           "twilloNumber":
                                                               numberController
                                                                   .text
