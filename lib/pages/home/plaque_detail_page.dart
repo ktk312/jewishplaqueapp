@@ -133,11 +133,11 @@ class _PlaqueDetailPageState extends State<PlaqueDetailPage> {
                           children: [
                             Obx(
                               () => Text(
-                                  "Hebrew Date: ${hebrewDateFormatter.format(JewishDate.fromDateTime(DateTime.parse(widget.isMale ? appController.maleList[widget.index].dod : appController.femaleList[widget.index].dod)))}"),
+                                  "Hebrew Date: ${hebrewDateFormatter.format(JewishDate.fromDateTime(DateTime.parse(widget.isMale ? appController.maleList[widget.index].predate : appController.femaleList[widget.index].predate)))}"),
                             ),
                             Obx(
                               () => Text(
-                                  "Gregorian Date: ${DateFormat('dd MMM yyyy').format(DateTime.parse(widget.isMale ? appController.maleList[widget.index].dod : appController.femaleList[widget.index].dod))}"),
+                                  "Gregorian Date: ${DateFormat('dd MMM yyyy').format(DateTime.parse(widget.isMale ? appController.maleList[widget.index].predate : appController.femaleList[widget.index].predate))}"),
                             ),
                           ],
                         ),
