@@ -96,8 +96,8 @@ class MyAppController extends GetxController {
           }
         }
 
-        maleList.sort((a, b) => a.plaqueFullname.compareTo(b.plaqueFullname));
-        femaleList.sort((a, b) => a.plaqueFullname.compareTo(b.plaqueFullname));
+        maleList.sort((a, b) => a.hebruname.compareTo(b.hebruname));
+        femaleList.sort((a, b) => a.hebruname.compareTo(b.hebruname));
       } else {
         Get.rawSnackbar(message: response, backgroundColor: Colors.red);
       }

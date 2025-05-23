@@ -217,7 +217,7 @@ class PlaqueListWidget extends StatelessWidget {
             constraints: const BoxConstraints(
               maxWidth: 200,
               minWidth: 100,
-              maxHeight: 60,
+              maxHeight: 80,
               minHeight: 40,
             ),
             child: GestureDetector(
@@ -231,6 +231,7 @@ class PlaqueListWidget extends StatelessWidget {
                 trailing: IconButton(
                   onPressed: () async {
                     Get.dialog(AlertDialog(
+                      backgroundColor: Color((0xFF171821)),
                       icon: Text(
                           'Are you sure you want to delete ${isMale ? appController.maleList[index].hebruname : appController.femaleList[index].hebruname}?'),
                       actions: [
@@ -267,40 +268,80 @@ class PlaqueListWidget extends StatelessWidget {
                   icon: const Icon(Icons.delete),
                   color: Colors.red,
                 ),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                title: Column(
                   children: [
-                    Text(
-                      isMale
-                          ? appController.maleList[index].hebruname
-                          : appController.femaleList[index].hebruname,
-                      style: const TextStyle(
-                        fontFamily: 'Alef',
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          isMale
+                              ? appController.maleList[index].hebruname
+                              : appController.femaleList[index].hebruname,
+                          style: const TextStyle(
+                            fontFamily: 'Alef',
+                          ),
+                        ),
+                        Text(
+                          "Led: ${isMale ? appController.maleList[index].led : appController.femaleList[index].led}",
+                          style: const TextStyle(fontSize: 12),
+                        ),
+                      ],
                     ),
-                    Text(
-                      "Led: ${isMale ? appController.maleList[index].led : appController.femaleList[index].led}",
-                      style: const TextStyle(fontSize: 12),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          isMale
+                              ? appController.maleList[index].plaqueFullname
+                              : appController.femaleList[index].plaqueFullname,
+                          style: const TextStyle(
+                            fontFamily: 'Alef',
+                          ),
+                        ),
+                        Container(),
+                        // Text(
+                        //   "Led: ${isMale ? appController.maleList[index].led : appController.femaleList[index].led}",
+                        //   style: const TextStyle(fontSize: 12),
+                        // ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          hebrewDateFormatter.format(JewishDate.fromDateTime(
+                              DateTime.tryParse(isMale
+                                  ? appController.maleList[index].dod
+                                  : appController.femaleList[index].dod)!)),
+                          style: const TextStyle(
+                            fontFamily: 'Alef',
+                          ),
+                        ),
+                        Text(isMale
+                            ? appController.maleList[index].gender.toUpperCase()
+                            : appController.femaleList[index].gender
+                                .toUpperCase()),
+                      ],
                     ),
                   ],
                 ),
-                subtitle: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      hebrewDateFormatter.format(JewishDate.fromDateTime(
-                          DateTime.tryParse(isMale
-                              ? appController.maleList[index].predate
-                              : appController.femaleList[index].predate)!)),
-                      style: const TextStyle(
-                        fontFamily: 'Alef',
-                      ),
-                    ),
-                    Text(isMale
-                        ? appController.maleList[index].gender.toUpperCase()
-                        : appController.femaleList[index].gender.toUpperCase()),
-                  ],
-                ),
+                // subtitle: Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Text(
+                //       hebrewDateFormatter.format(JewishDate.fromDateTime(
+                //           DateTime.tryParse(isMale
+                //               ? appController.maleList[index].dod
+                //               : appController.femaleList[index].dod)!)),
+                //       style: const TextStyle(
+                //         fontFamily: 'Alef',
+                //       ),
+                //     ),
+                //     Text(isMale
+                //         ? appController.maleList[index].gender.toUpperCase()
+                //         : appController.femaleList[index].gender.toUpperCase()),
+                //   ],
+                // ),
               ),
             ),
           )),
