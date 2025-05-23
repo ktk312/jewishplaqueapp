@@ -35,6 +35,9 @@ class _AdminPageState extends State<AdminPage> {
 
   int selectedUserId = 0;
 
+  String sID = '';
+  String number = '';
+
   @override
   void initState() {
     // TODO: implement initState
@@ -44,6 +47,8 @@ class _AdminPageState extends State<AdminPage> {
 
   setup() async {
     await getUsers();
+    selectedUserId = int.parse(userData.first.id);
+    await getTwillioCredentials(selectedUserId.toString());
   }
 
   getUsers() async {
@@ -63,7 +68,35 @@ class _AdminPageState extends State<AdminPage> {
       print(resBody);
       final userModel = userModelFromJson(resBody);
       userData = userModel.data;
+
       await getAllLeds(selectedUserId);
+      setState(() {});
+    } else {
+      print(res.reasonPhrase);
+    }
+  }
+
+  getTwillioCredentials(String userID) async {
+    var headersList = {
+      'Accept': '*/*',
+      'User-Agent': 'Thunder Client (https://www.thunderclient.com)'
+    };
+    var url = Uri.parse(
+        'https://bsdjudaica.com/plaq/admin/getTwillio.php?userId=$userID');
+
+    var req = http.Request('GET', url);
+    req.headers.addAll(headersList);
+
+    var res = await req.send();
+    final resBody = await res.stream.bytesToString();
+
+    if (res.statusCode >= 200 && res.statusCode < 300) {
+      print(resBody);
+      final decodedJson = jsonDecode(resBody);
+      sID = decodedJson['data']['sid'];
+      number = decodedJson['data']['twilloNumber'];
+      sidController.text = sID;
+      numberController.text = number;
       setState(() {});
     } else {
       print(res.reasonPhrase);
@@ -229,6 +262,9 @@ class _AdminPageState extends State<AdminPage> {
                                                   setState(() {});
 
                                                   getAllLeds(selectedUserId);
+                                                  getTwillioCredentials(
+                                                      selectedUserId
+                                                          .toString());
 
                                                   Future.delayed(
                                                       Duration(seconds: 2), () {
@@ -324,7 +360,7 @@ class _AdminPageState extends State<AdminPage> {
                                                               .text,
                                                           "token": appController
                                                               .token.value,
-                                                          "twillioNumber":
+                                                          "twilloNumber":
                                                               numberController
                                                                   .text
                                                         };
@@ -344,6 +380,37 @@ class _AdminPageState extends State<AdminPage> {
                                                             .stream
                                                             .bytesToString();
                                                         print(resBody);
+
+                                                        final decodedJson =
+                                                            jsonDecode(resBody);
+
+                                                        if (decodedJson[
+                                                                'success'] ==
+                                                            true) {
+                                                          final decodedJson =
+                                                              jsonDecode(
+                                                                  resBody);
+
+                                                          if (decodedJson[
+                                                                  'success'] ==
+                                                              true) {
+                                                            Get.rawSnackbar(
+                                                                message:
+                                                                    'Twillio Credentials Updated Successfully',
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .green);
+                                                            await getTwillioCredentials(
+                                                                selectedUserId
+                                                                    .toString());
+                                                          }
+                                                        } else {
+                                                          Get.rawSnackbar(
+                                                              message:
+                                                                  "Unable to update. Try Again",
+                                                              backgroundColor:
+                                                                  Colors.red);
+                                                        }
                                                         // final decodedJson =
                                                         //     jsonDecode(resBody);
 
