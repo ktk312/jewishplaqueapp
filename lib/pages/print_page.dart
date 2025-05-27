@@ -109,7 +109,7 @@ class _PrintPageState extends State<PrintPage> {
                           columnWidths: {
                             0: const pw.FlexColumnWidth(),
                             1: const pw.FlexColumnWidth(),
-                            2: const pw.FlexColumnWidth(),
+                            // 2: const pw.FlexColumnWidth(),
                           },
                           children: [
                             pw.TableRow(
@@ -120,9 +120,9 @@ class _PrintPageState extends State<PrintPage> {
                                 pw.Text('Date',
                                     textAlign: pw.TextAlign.center,
                                     style: const pw.TextStyle(fontSize: 20)),
-                                pw.Text('Led',
-                                    textAlign: pw.TextAlign.center,
-                                    style: const pw.TextStyle(fontSize: 20)),
+                                // pw.Text('Led',
+                                //     textAlign: pw.TextAlign.center,
+                                //     style: const pw.TextStyle(fontSize: 20)),
                               ],
                             ),
                             for (var plaque in malePlaques)
@@ -144,9 +144,9 @@ class _PrintPageState extends State<PrintPage> {
                                           font: hebrewFont,
                                           fontSize:
                                               16)), // Replace this with formatted date
-                                  pw.Text(plaque.led,
-                                      textAlign: pw.TextAlign.center,
-                                      style: const pw.TextStyle(fontSize: 16)),
+                                  // pw.Text(plaque.led,
+                                  //     textAlign: pw.TextAlign.center,
+                                  //     style: const pw.TextStyle(fontSize: 16)),
                                 ],
                               ),
                           ],
@@ -166,7 +166,7 @@ class _PrintPageState extends State<PrintPage> {
                           columnWidths: {
                             0: const pw.FlexColumnWidth(),
                             1: const pw.FlexColumnWidth(),
-                            2: const pw.FlexColumnWidth(),
+                            // 2: const pw.FlexColumnWidth(),
                           },
                           children: [
                             pw.TableRow(
@@ -177,9 +177,9 @@ class _PrintPageState extends State<PrintPage> {
                                 pw.Text('Date',
                                     textAlign: pw.TextAlign.center,
                                     style: const pw.TextStyle(fontSize: 20)),
-                                pw.Text('Led',
-                                    textAlign: pw.TextAlign.center,
-                                    style: const pw.TextStyle(fontSize: 20)),
+                                // pw.Text('Led',
+                                //     textAlign: pw.TextAlign.center,
+                                //     style: const pw.TextStyle(fontSize: 20)),
                               ],
                             ),
                             for (var plaque in femalePlaques)
@@ -201,9 +201,9 @@ class _PrintPageState extends State<PrintPage> {
                                           font: hebrewFont,
                                           fontSize:
                                               16)), // Replace this with formatted date
-                                  pw.Text(plaque.led,
-                                      textAlign: pw.TextAlign.center,
-                                      style: const pw.TextStyle(fontSize: 16)),
+                                  // pw.Text(plaque.led,
+                                  //     textAlign: pw.TextAlign.center,
+                                  //     style: const pw.TextStyle(fontSize: 16)),
                                 ],
                               ),
                           ],
@@ -325,10 +325,10 @@ class _PrintPageState extends State<PrintPage> {
                                         Text('Date',
                                             style: TextStyle(fontSize: 20.0))
                                       ]),
-                                      Column(children: [
-                                        Text('Led',
-                                            style: TextStyle(fontSize: 20.0))
-                                      ]),
+                                      // Column(children: [
+                                      //   Text('Led',
+                                      //       style: TextStyle(fontSize: 20.0))
+                                      // ]),
                                     ]),
 
                                     for (var plaque in plaqueList)
@@ -353,13 +353,13 @@ class _PrintPageState extends State<PrintPage> {
                                                       fontSize: 16.0))
                                             ],
                                           ),
-                                          Column(
-                                            children: [
-                                              Text(plaque.led,
-                                                  style: const TextStyle(
-                                                      fontSize: 16.0))
-                                            ],
-                                          )
+                                          // Column(
+                                          //   children: [
+                                          //     Text(plaque.led,
+                                          //         style: const TextStyle(
+                                          //             fontSize: 16.0))
+                                          //   ],
+                                          // )
                                         ])
 
                                     // appController.plaqueList.map((element)=>TableRow()).toList()
@@ -415,10 +415,10 @@ class _PrintPageState extends State<PrintPage> {
                                         Text('Date',
                                             style: TextStyle(fontSize: 20.0))
                                       ]),
-                                      Column(children: [
-                                        Text('Led',
-                                            style: TextStyle(fontSize: 20.0))
-                                      ]),
+                                      // Column(children: [
+                                      //   Text('Led',
+                                      //       style: TextStyle(fontSize: 20.0))
+                                      // ]),
                                     ]),
 
                                     for (var plaque in plaqueList)
@@ -444,13 +444,13 @@ class _PrintPageState extends State<PrintPage> {
                                                       fontSize: 16.0))
                                             ],
                                           ),
-                                          Column(
-                                            children: [
-                                              Text(plaque.led,
-                                                  style: const TextStyle(
-                                                      fontSize: 16.0))
-                                            ],
-                                          )
+                                          // Column(
+                                          //   children: [
+                                          //     Text(plaque.led,
+                                          //         style: const TextStyle(
+                                          //             fontSize: 16.0))
+                                          //   ],
+                                          // )
                                         ])
 
                                     // appController.plaqueList.map((element)=>TableRow()).toList()
