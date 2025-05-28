@@ -53,15 +53,20 @@ class _PrintPageState extends State<PrintPage> {
     int daysSinceFriday = (today.weekday - DateTime.friday + 7) % 7;
     DateTime currentFriday = today.subtract(Duration(days: daysSinceFriday));
 
-    // If today is Friday and it's NOT the same as the currentFriday, move to today
-    if (today.weekday == DateTime.friday && today.isAfter(currentFriday)) {
-      currentFriday = today;
-    }
-
     // Define the 9-day range: Friday to next Saturday (inclusive)
     DateTime rangeStart = currentFriday;
-    DateTime rangeEnd = rangeStart
-        .add(Duration(days: 9)); // Friday + 9 days = next Saturday (exclusive)
+    DateTime rangeEnd =
+        rangeStart.add(Duration(days: 9)); // Exclusive of this date
+
+    // If we're past the current range (after next Saturday),
+    // move to the next Friday's range
+    if (today.isAfter(rangeEnd.subtract(Duration(days: 1)))) {
+      // Calculate next Friday
+      int daysUntilNextFriday = (DateTime.friday - today.weekday + 7) % 7;
+      currentFriday = today.add(Duration(days: daysUntilNextFriday));
+      rangeStart = currentFriday;
+      rangeEnd = rangeStart.add(Duration(days: 9));
+    }
 
     // The effective start date is the later of either:
     // - the range start (Friday)
