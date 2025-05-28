@@ -34,6 +34,7 @@ class _MessagePageState extends State<MessagePage> {
   TextEditingController portController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController timerController = TextEditingController();
 
   final appController = Get.find<MyAppController>();
 
@@ -58,10 +59,12 @@ class _MessagePageState extends State<MessagePage> {
         backgroundColor: Colors.red,
       );
     } else {
+      print(response);
       final decodedResponse = jsonDecode(response);
       website1Controller.text = decodedResponse['link1'];
       website2Controller.text = decodedResponse['link2'];
       website3Controller.text = decodedResponse['link3'];
+      timerController.text = decodedResponse['timer'];
     }
   }
 
@@ -313,12 +316,18 @@ class _MessagePageState extends State<MessagePage> {
                     child: _getTextField(
                         context, website3Controller, 'Website 3')),
                 height(context),
+                SizedBox(
+                    height: 35,
+                    child: _getTextField(
+                        context, timerController, 'Slide Time Seconds')),
+                height(context),
                 GestureDetector(
                     onTap: () async {
                       var body = {
                         "link1": website1Controller.text,
                         "link2": website2Controller.text,
-                        "link3": website3Controller.text
+                        "link3": website3Controller.text,
+                        "timer": timerController.text
                       };
 
                       final response = await NetworkCalls().saveWebsites(body);
