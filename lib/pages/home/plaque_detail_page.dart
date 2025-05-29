@@ -171,6 +171,7 @@ class _PlaqueDetailPageState extends State<PlaqueDetailPage> {
                         // };
 
                         var body = {
+                          "userId": appController.userId.value,
                           "led_number": widget.isMale
                               ? appController.maleList[widget.index].led
                               : appController.femaleList[widget.index].led,

@@ -101,9 +101,9 @@ class _AddPlaqueState extends State<AddPlaque> {
       String username = decodedResponse['data']['username'];
       String password = decodedResponse['data']['password'];
 
-      await newClient
-          .prepareMqttClient(host, port, username, password)
-          .then((value) => newClient.publishMessage("{'a':'a'}"));
+      await newClient.prepareMqttClient(host, port, username, password).then(
+          (value) => newClient.publishMessage(
+              "{'a':'a', userId: ${myAppController.userId.value}}"));
     }
   }
 

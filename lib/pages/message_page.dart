@@ -260,7 +260,10 @@ class _MessagePageState extends State<MessagePage> {
                               //       "N1-15"
                               // };
 
-                              var body = {"led_number": 'all'};
+                              var body = {
+                                "led_number": 'all',
+                                "userId": appController.userId.value
+                              };
                               print(body);
                               isTesting = true;
                               setState(() {});
