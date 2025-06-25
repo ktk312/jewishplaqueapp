@@ -266,12 +266,12 @@ class _PlaqueDetailPageState extends State<PlaqueDetailPage> {
                                       ? appController.maleList[widget.index]
                                                   .relatives[index].isSms ==
                                               "0"
-                                          ? "Whatsapp"
+                                          ? ""
                                           : "SMS"
                                       : appController.femaleList[widget.index]
                                                   .relatives[index].isSms ==
                                               "0"
-                                          ? "Whatsapp"
+                                          ? ""
                                           : "SMS"),
                                   SizedBox(
                                     width: 10,

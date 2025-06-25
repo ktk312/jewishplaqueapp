@@ -72,8 +72,21 @@ class _AddRelativeState extends State<AddRelative> {
                     height: 35,
                     child: Row(
                       children: [
+                        // Text(
+                        //   'Whatsapp',
+                        //   style: TextStyle(
+                        //     fontSize: 18,
+                        //   ),
+                        // ),
+                        // SizedBox(
+                        //   width: 20,
+                        // ),
+
+                        SizedBox(
+                          width: 20,
+                        ),
                         Text(
-                          'Whatsapp',
+                          'SMS',
                           style: TextStyle(
                             fontSize: 18,
                           ),
@@ -87,15 +100,6 @@ class _AddRelativeState extends State<AddRelative> {
                               isSms = val;
                               setState(() {});
                             }),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          'SMS',
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
                       ],
                     )),
                 height(context),
