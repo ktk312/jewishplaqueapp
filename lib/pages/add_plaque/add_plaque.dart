@@ -380,17 +380,29 @@ class _AddPlaqueState extends State<AddPlaque> {
                           final today = DateTime.now();
                           final todayTruncated = DateTime(today.year,
                               today.month, today.day); // remove time component
-
+                          print('todaytruncated: $date');
                           int candidateYear =
                               JewishDate.fromDateTime(today).getJewishYear();
+                          print('candidate year: $date');
+                          final candidateCheckLeap = JewishDate.initDate(
+                              jewishYear: candidateYear,
+                              jewishMonth: 1,
+                              jewishDayOfMonth: 1);
+                          print('candidatecheckleap: $candidateCheckLeap');
+                          final isCandidateLeap =
+                              candidateCheckLeap.isJewishLeapYear();
+                          print('iscandidate leap: $isCandidateLeap');
 
                           JewishDate candidateJewishDate = JewishDate.initDate(
                             jewishYear: candidateYear,
-                            jewishMonth: selectedJewishDate.getJewishMonth(),
+                            jewishMonth: isCandidateLeap &&
+                                    selectedJewishDate.getJewishMonth() == 13
+                                ? selectedJewishDate.getJewishMonth()
+                                : selectedJewishDate.getJewishMonth() - 1,
                             jewishDayOfMonth:
                                 selectedJewishDate.getJewishDayOfMonth(),
                           );
-
+                          print('candidate jewish date: $candidateJewishDate');
                           final candidateGregorian =
                               candidateJewishDate.getGregorianCalendar();
                           final candidateTruncated = DateTime(
@@ -398,14 +410,17 @@ class _AddPlaqueState extends State<AddPlaque> {
                             candidateGregorian.month,
                             candidateGregorian.day,
                           );
-
+                          print('Date confirmed: $date');
 // 🔍 Check: if candidate is today or later, use it; else, go to next year
                           if (candidateTruncated.isBefore(todayTruncated)) {
                             candidateYear += 1;
-
+                            print('asdsadasdasd 2');
                             candidateJewishDate = JewishDate.initDate(
                               jewishYear: candidateYear,
-                              jewishMonth: selectedJewishDate.getJewishMonth(),
+                              jewishMonth: isCandidateLeap &&
+                                      selectedJewishDate.getJewishMonth() == 13
+                                  ? selectedJewishDate.getJewishMonth()
+                                  : selectedJewishDate.getJewishMonth() - 1,
                               jewishDayOfMonth:
                                   selectedJewishDate.getJewishDayOfMonth(),
                             );
