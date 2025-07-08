@@ -15,7 +15,7 @@ class MQTTClientWrapper {
       _setupMqttClient(host, port, username);
       await _connectClient(username, password);
       _subscribeToTopic('main/hub');
-      publishMessage('Hello');
+      publishMessage('Client connected');
     } catch (e) {
       print(e);
     }
@@ -49,7 +49,7 @@ class MQTTClientWrapper {
 
   void _setupMqttClient(String host, String port, String username) {
     client = MqttBrowserClient.withPort(
-        'wss://$host:$port/mqtt', 'Zeeshan', int.parse(port));
+        'wss://$host:$port/mqtt', DateTime.now().toString(), int.parse(port));
     // client = MqttBrowserClient.withPort(
     // 'wss://480ad66f607749b0b6df10a355873442.s2.eu.hivemq.cloud:8884/mqtt',
     // 'Zeeshan',
@@ -83,6 +83,7 @@ class MQTTClientWrapper {
 
     print('Publishing message "$message" to topic ');
     client.publishMessage('main/hub', MqttQos.exactlyOnce, builder.payload!);
+    print(client.clientIdentifier);
   }
 
   // callbacks for different events

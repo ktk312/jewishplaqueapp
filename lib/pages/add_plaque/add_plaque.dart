@@ -73,17 +73,23 @@ class _AddPlaqueState extends State<AddPlaque> {
     'Item 5',
   ].obs;
 
+  String ledsText = '';
+
   getAvailableLeds() async {
     List<String> returnList = [];
     final response = await NetworkCalls().getAvailableLeds();
     print("Response:::: ${jsonDecode(response)['available_leds']}");
-    var arrayItems = jsonDecode(response)['available_leds'];
-    for (var item in arrayItems) {
-      returnList.add(item.toString());
+    if (jsonDecode(response)['available_leds'] != null) {
+      var arrayItems = jsonDecode(response)['available_leds'];
+      for (var item in arrayItems) {
+        returnList.add(item.toString());
+      }
+      availableLedsList.value = returnList;
+      dropdownvalue.value = availableLedsList.first;
+      setState(() {});
+    } else {
+      ledsText = 'No Leds found or All available leds are taken';
     }
-    availableLedsList.value = returnList;
-    dropdownvalue.value = availableLedsList.first;
-    setState(() {});
   }
 
   connectMqttAndSendMessage() async {
@@ -429,8 +435,11 @@ class _AddPlaqueState extends State<AddPlaque> {
                           final jewishDate = candidateJewishDate;
                           print('asdsadasdasd');
 
-                          jDate.add(hebrewDateFormatter.format(jewishDate));
+                          jDate.add(
+                              hebrewDateFormatter.format(selectedJewishDate));
                           jDate.add(date);
+                          jDate.add(translatedDateFormatter
+                              .format(selectedJewishDate));
                           print('ergregergerger');
                           gregorianDates.clear();
                           for (int i = 0; i <= 10; i++) {
@@ -545,6 +554,13 @@ class _AddPlaqueState extends State<AddPlaque> {
                                   ? 'Hebrew Date'
                                   : 'Select Date'),
                               if (jDate.isNotEmpty) Text(jDate[0]),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(jDate.length > 1 ? 'Hebrew Date' : ''),
+                              if (jDate.length > 1) Text(jDate[2]),
                             ],
                           ),
                           Row(

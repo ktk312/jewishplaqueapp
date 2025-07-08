@@ -82,17 +82,17 @@ class _HomePageState extends State<HomePage> {
                   ),
                 )
               : Container(),
-          const SizedBox(
-            width: 20,
-          ),
-          TextButton(
-            onPressed: () {
-              connectMqttAndSendMessage();
-            },
-            child: const Text(
-              'Sync',
-            ),
-          ),
+          // const SizedBox(
+          //   width: 20,
+          // ),
+          // TextButton(
+          //   onPressed: () {
+          //     connectMqttAndSendMessage();
+          //   },
+          //   child: const Text(
+          //     'Sync',
+          //   ),
+          // ),
           const SizedBox(
             width: 20,
           ),

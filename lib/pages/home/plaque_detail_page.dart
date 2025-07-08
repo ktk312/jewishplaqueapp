@@ -262,6 +262,7 @@ class _PlaqueDetailPageState extends State<PlaqueDetailPage> {
                                       .relatives[index].relativeFullname),
                               Row(
                                 children: [
+<<<<<<< Updated upstream
                                   Text(widget.isMale
                                       ? appController.maleList[widget.index]
                                                   .relatives[index].isSms ==
@@ -273,6 +274,19 @@ class _PlaqueDetailPageState extends State<PlaqueDetailPage> {
                                               "0"
                                           ? ""
                                           : "SMS"),
+=======
+                                  // Text(widget.isMale
+                                  //     ? appController.maleList[widget.index]
+                                  //                 .relatives[index].isSms ==
+                                  //             "0"
+                                  //         ? "Whatsapp"
+                                  //         : "SMS"
+                                  //     : appController.femaleList[widget.index]
+                                  //                 .relatives[index].isSms ==
+                                  //             "0"
+                                  //         ? "Whatsapp"
+                                  //         : "SMS"),
+>>>>>>> Stashed changes
                                   SizedBox(
                                     width: 10,
                                   ),

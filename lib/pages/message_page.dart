@@ -159,42 +159,42 @@ class _MessagePageState extends State<MessagePage> {
                 ),
                 height(context),
                 height(context),
-                SizedBox(
-                  width: Get.size.width,
-                  child: const Text(
-                    'Message',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                    height: 35,
-                    child: _getTextField(
-                        context, messageController, 'SMS Message')),
-                height(context),
-                GestureDetector(
-                    onTap: () async {
-                      // message post call
-                      var body = {"message": messageController.text};
+                // SizedBox(
+                //   width: Get.size.width,
+                //   child: const Text(
+                //     'Message',
+                //     textAlign: TextAlign.left,
+                //     style: TextStyle(
+                //       fontSize: 18,
+                //     ),
+                //   ),
+                // ),
+                // SizedBox(
+                //     height: 35,
+                //     child: _getTextField(
+                //         context, messageController, 'SMS Message')),
+                // height(context),
+                // GestureDetector(
+                //     onTap: () async {
+                //       // message post call
+                //       var body = {"message": messageController.text};
 
-                      final response = await NetworkCalls().postMessage(body);
-                      if (response.contains('Error')) {
-                        Get.rawSnackbar(
-                          message: response,
-                          backgroundColor: Colors.red,
-                        );
-                      }
-                      Get.back(result: 'success');
-                      Get.rawSnackbar(
-                        message: 'Message Saved Successfully!',
-                        backgroundColor: Colors.green.shade500,
-                      );
-                      getMessage();
-                    },
-                    child: const CustomCard(child: Text('Save Message'))),
-                height(context),
+                //       final response = await NetworkCalls().postMessage(body);
+                //       if (response.contains('Error')) {
+                //         Get.rawSnackbar(
+                //           message: response,
+                //           backgroundColor: Colors.red,
+                //         );
+                //       }
+                //       Get.back(result: 'success');
+                //       Get.rawSnackbar(
+                //         message: 'Message Saved Successfully!',
+                //         backgroundColor: Colors.green.shade500,
+                //       );
+                //       getMessage();
+                //     },
+                //     child: const CustomCard(child: Text('Save Message'))),
+                // height(context),
                 // SizedBox(
                 //   width: Get.size.width,
                 //   child: const Text(
