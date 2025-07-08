@@ -45,37 +45,69 @@ class _PrintPageState extends State<PrintPage> {
     setState(() {});
   }
 
+  // void followingWeek() {
+  //   DateTime now = DateTime.now();
+  //   DateTime today = DateTime(now.year, now.month, now.day);
+
+  //   // Calculate the most recent Friday (including today if Friday)
+  //   int daysSinceFriday = (today.weekday - DateTime.friday + 7) % 7;
+  //   DateTime currentFriday = today.subtract(Duration(days: daysSinceFriday));
+
+  //   // Define the 9-day range: Friday to next Saturday (inclusive)
+  //   DateTime rangeStart = currentFriday;
+  //   DateTime rangeEnd =
+  //       rangeStart.add(Duration(days: 9)); // Exclusive of this date
+
+  //   // If we're past the current range (after next Saturday),
+  //   // move to the next Friday's range
+  //   if (today.isAfter(rangeEnd.subtract(Duration(days: 1)))) {
+  //     // Calculate next Friday
+  //     int daysUntilNextFriday = (DateTime.friday - today.weekday + 7) % 7;
+  //     currentFriday = today.add(Duration(days: daysUntilNextFriday));
+  //     rangeStart = currentFriday;
+  //     rangeEnd = rangeStart.add(Duration(days: 9));
+  //   }
+
+  //   // The effective start date is the later of either:
+  //   // - the range start (Friday)
+  //   // - or today's date
+  //   DateTime effectiveStart = today.isAfter(rangeStart) ? today : rangeStart;
+
+  //   List<PlaqueModel> nineDayPlaques = appController.plaqueList.where((plaque) {
+  //     DateTime dodDate = DateTime.parse(plaque.dod);
+  //     return !dodDate.isBefore(effectiveStart) && dodDate.isBefore(rangeEnd);
+  //   }).toList();
+
+  //   plaqueList = nineDayPlaques;
+  //   setState(() {});
+  // }
+
   void followingWeek() {
     DateTime now = DateTime.now();
     DateTime today = DateTime(now.year, now.month, now.day);
 
-    // Calculate the most recent Friday (including today if Friday)
+    // Step 1: Find most recent Friday (or today if Friday)
     int daysSinceFriday = (today.weekday - DateTime.friday + 7) % 7;
-    DateTime currentFriday = today.subtract(Duration(days: daysSinceFriday));
-
-    // Define the 9-day range: Friday to next Saturday (inclusive)
-    DateTime rangeStart = currentFriday;
+    DateTime rangeStart = today.subtract(Duration(days: daysSinceFriday));
     DateTime rangeEnd =
-        rangeStart.add(Duration(days: 9)); // Exclusive of this date
+        rangeStart.add(Duration(days: 9)); // Friday → next Saturday
 
-    // If we're past the current range (after next Saturday),
-    // move to the next Friday's range
-    if (today.isAfter(rangeEnd.subtract(Duration(days: 1)))) {
-      // Calculate next Friday
-      int daysUntilNextFriday = (DateTime.friday - today.weekday + 7) % 7;
-      currentFriday = today.add(Duration(days: daysUntilNextFriday));
-      rangeStart = currentFriday;
-      rangeEnd = rangeStart.add(Duration(days: 9));
+    // Step 2: Build Hebrew (month-day) keys for 9-day Gregorian range
+    Set<String> hebrewWeekKeys = {};
+    for (int i = 0; i < 9; i++) {
+      DateTime gregorianDay = rangeStart.add(Duration(days: i));
+      JewishDate hebrewDay = JewishDate.fromDateTime(gregorianDay);
+      hebrewWeekKeys.add(
+          "${hebrewDay.getJewishMonth()}-${hebrewDay.getJewishDayOfMonth()}");
     }
 
-    // The effective start date is the later of either:
-    // - the range start (Friday)
-    // - or today's date
-    DateTime effectiveStart = today.isAfter(rangeStart) ? today : rangeStart;
-
+    // Step 3: Filter plaques whose Hebrew death date falls within the Hebrew week
     List<PlaqueModel> nineDayPlaques = appController.plaqueList.where((plaque) {
-      DateTime dodDate = DateTime.parse(plaque.dod);
-      return !dodDate.isBefore(effectiveStart) && dodDate.isBefore(rangeEnd);
+      DateTime dod = DateTime.parse(plaque.predate);
+      JewishDate dodHebrew = JewishDate.fromDateTime(dod);
+      String plaqueKey =
+          "${dodHebrew.getJewishMonth()}-${dodHebrew.getJewishDayOfMonth()}";
+      return hebrewWeekKeys.contains(plaqueKey);
     }).toList();
 
     plaqueList = nineDayPlaques;
