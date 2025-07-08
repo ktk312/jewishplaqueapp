@@ -68,43 +68,6 @@ class _AddRelativeState extends State<AddRelative> {
                     child: _getTextField(context, phoneController, 'Phone',
                         keyboardType: TextInputType.phone)),
                 height(context),
-<<<<<<< Updated upstream
-                SizedBox(
-                    height: 35,
-                    child: Row(
-                      children: [
-                        // Text(
-                        //   'Whatsapp',
-                        //   style: TextStyle(
-                        //     fontSize: 18,
-                        //   ),
-                        // ),
-                        // SizedBox(
-                        //   width: 20,
-                        // ),
-
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          'SMS',
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Switch(
-                            value: isSms,
-                            onChanged: (val) {
-                              isSms = val;
-                              setState(() {});
-                            }),
-                      ],
-                    )),
-                height(context),
-=======
                 // SizedBox(
                 //     height: 35,
                 //     child: Row(
@@ -136,7 +99,6 @@ class _AddRelativeState extends State<AddRelative> {
                 //       ],
                 //     )),
                 // height(context),
->>>>>>> Stashed changes
                 GestureDetector(
                     onTap: () async {
                       var body = {
