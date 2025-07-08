@@ -81,7 +81,6 @@ class _PrintPageState extends State<PrintPage> {
   //   plaqueList = nineDayPlaques;
   //   setState(() {});
   // }
-
   void followingWeek() {
     DateTime now = DateTime.now();
     DateTime today = DateTime(now.year, now.month, now.day);
@@ -90,18 +89,20 @@ class _PrintPageState extends State<PrintPage> {
     int daysSinceFriday = (today.weekday - DateTime.friday + 7) % 7;
     DateTime rangeStart = today.subtract(Duration(days: daysSinceFriday));
     DateTime rangeEnd =
-        rangeStart.add(Duration(days: 9)); // Friday → next Saturday
+        rangeStart.add(Duration(days: 9)); // Friday → next Sunday
 
-    // Step 2: Build Hebrew (month-day) keys for 9-day Gregorian range
+    // Step 2: Build Hebrew (month-day) keys for 9-day Gregorian range, skipping past days
     Set<String> hebrewWeekKeys = {};
     for (int i = 0; i < 9; i++) {
       DateTime gregorianDay = rangeStart.add(Duration(days: i));
+      if (gregorianDay.isBefore(today)) continue; // Skip past dates
+
       JewishDate hebrewDay = JewishDate.fromDateTime(gregorianDay);
       hebrewWeekKeys.add(
           "${hebrewDay.getJewishMonth()}-${hebrewDay.getJewishDayOfMonth()}");
     }
 
-    // Step 3: Filter plaques whose Hebrew death date falls within the Hebrew week
+    // Step 3: Filter plaques whose Hebrew death date falls within the remaining week
     List<PlaqueModel> nineDayPlaques = appController.plaqueList.where((plaque) {
       DateTime dod = DateTime.parse(plaque.predate);
       JewishDate dodHebrew = JewishDate.fromDateTime(dod);
