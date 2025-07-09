@@ -383,6 +383,7 @@ class _AddPlaqueState extends State<AddPlaque> {
 
                           final selectedJewishDate =
                               JewishDate.fromDateTime(date);
+                          print(selectedJewishDate);
                           final today = DateTime.now();
                           final todayTruncated = DateTime(today.year,
                               today.month, today.day); // remove time component
@@ -403,8 +404,8 @@ class _AddPlaqueState extends State<AddPlaque> {
                             jewishYear: candidateYear,
                             jewishMonth: isCandidateLeap &&
                                     selectedJewishDate.getJewishMonth() == 13
-                                ? selectedJewishDate.getJewishMonth()
-                                : selectedJewishDate.getJewishMonth() - 1,
+                                ? selectedJewishDate.getJewishMonth() - 1
+                                : selectedJewishDate.getJewishMonth(),
                             jewishDayOfMonth:
                                 selectedJewishDate.getJewishDayOfMonth(),
                           );
@@ -425,8 +426,8 @@ class _AddPlaqueState extends State<AddPlaque> {
                               jewishYear: candidateYear,
                               jewishMonth: isCandidateLeap &&
                                       selectedJewishDate.getJewishMonth() == 13
-                                  ? selectedJewishDate.getJewishMonth()
-                                  : selectedJewishDate.getJewishMonth() - 1,
+                                  ? selectedJewishDate.getJewishMonth() - 1
+                                  : selectedJewishDate.getJewishMonth(),
                               jewishDayOfMonth:
                                   selectedJewishDate.getJewishDayOfMonth(),
                             );
