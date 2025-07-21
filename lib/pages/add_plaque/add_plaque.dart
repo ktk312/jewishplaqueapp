@@ -378,27 +378,21 @@ class _AddPlaqueState extends State<AddPlaque> {
                         onConfirmDate: (date) {
                           print('Date confirmed: $date');
                           jDate.clear();
-                          print('Date confirmed: $date');
-                          jDate.clear();
 
                           final selectedJewishDate =
                               JewishDate.fromDateTime(date);
-                          print(selectedJewishDate);
+                          print("selected jewish date : $selectedJewishDate");
                           final today = DateTime.now();
                           final todayTruncated = DateTime(today.year,
                               today.month, today.day); // remove time component
-                          print('todaytruncated: $date');
                           int candidateYear =
                               JewishDate.fromDateTime(today).getJewishYear();
-                          print('candidate year: $date');
                           final candidateCheckLeap = JewishDate.initDate(
                               jewishYear: candidateYear,
                               jewishMonth: 1,
                               jewishDayOfMonth: 1);
-                          print('candidatecheckleap: $candidateCheckLeap');
                           final isCandidateLeap =
                               candidateCheckLeap.isJewishLeapYear();
-                          print('iscandidate leap: $isCandidateLeap');
 
                           JewishDate candidateJewishDate = JewishDate.initDate(
                             jewishYear: candidateYear,
@@ -421,11 +415,9 @@ class _AddPlaqueState extends State<AddPlaque> {
                             candidateGregorian.month,
                             candidateGregorian.day,
                           );
-                          print('Date confirmed: $date');
 // 🔍 Check: if candidate is today or later, use it; else, go to next year
                           if (candidateTruncated.isBefore(todayTruncated)) {
                             candidateYear += 1;
-                            print('asdsadasdasd 2');
                             candidateJewishDate = JewishDate.initDate(
                               jewishYear: candidateYear,
                               jewishMonth: isCandidateLeap &&
@@ -442,38 +434,28 @@ class _AddPlaqueState extends State<AddPlaque> {
                           }
 
                           final jewishDate = candidateJewishDate;
-                          print('asdsadasdasd');
-
                           jDate.add(
                               hebrewDateFormatter.format(selectedJewishDate));
                           jDate.add(date);
                           jDate.add(translatedDateFormatter
                               .format(selectedJewishDate));
-                          print('ergregergerger');
                           gregorianDates.clear();
                           for (int i = 0; i <= 10; i++) {
-                            print('in loop');
-
                             final isSelectedYearLeap =
                                 jewishDate.isJewishLeapYear();
-                            print('selected leap year');
                             final jewishMonthSelected =
                                 selectedJewishDate.getJewishMonth();
-                            print('selected jewish month');
                             final leapYearCheck = JewishDate.initDate(
                                 jewishYear: jewishDate.getJewishYear() + i,
                                 jewishMonth: 1,
                                 jewishDayOfMonth:
                                     jewishDate.getJewishDayOfMonth());
-                            print('after leap year check');
-                            print('selected month $jewishMonthSelected');
                             // if (i == 1) {
                             //   gregorianDates.add(jDate[1].toString());
                             // }
                             if (!leapYearCheck.isJewishLeapYear() &&
                                 isSelectedYearLeap &&
                                 jewishMonthSelected == 13) {
-                              print('leap year config');
                               final month = 12;
                               final nextYearDate = JewishDate.initDate(
                                   jewishYear: jewishDate.getJewishYear() + i,
@@ -485,10 +467,7 @@ class _AddPlaqueState extends State<AddPlaque> {
                                   .toString());
                               print(nextYearDate);
                             } else {
-                              print('leap year config else');
-
                               int targetMonth = jewishDate.getJewishMonth();
-
 // If selected year is not a leap year AND selected month is Adar (12),
 // then for future leap years, use Adar II (13) instead of Adar I (12)
                               if (!isSelectedYearLeap &&
