@@ -404,8 +404,12 @@ class _AddPlaqueState extends State<AddPlaque> {
                             jewishYear: candidateYear,
                             jewishMonth: isCandidateLeap &&
                                     selectedJewishDate.getJewishMonth() == 13
-                                ? selectedJewishDate.getJewishMonth() - 1
-                                : selectedJewishDate.getJewishMonth(),
+                                ? selectedJewishDate.getJewishMonth()
+                                : !isCandidateLeap &&
+                                        selectedJewishDate.getJewishMonth() ==
+                                            13
+                                    ? selectedJewishDate.getJewishMonth() - 1
+                                    : selectedJewishDate.getJewishMonth(),
                             jewishDayOfMonth:
                                 selectedJewishDate.getJewishDayOfMonth(),
                           );
@@ -426,8 +430,12 @@ class _AddPlaqueState extends State<AddPlaque> {
                               jewishYear: candidateYear,
                               jewishMonth: isCandidateLeap &&
                                       selectedJewishDate.getJewishMonth() == 13
-                                  ? selectedJewishDate.getJewishMonth() - 1
-                                  : selectedJewishDate.getJewishMonth(),
+                                  ? selectedJewishDate.getJewishMonth()
+                                  : !isCandidateLeap &&
+                                          selectedJewishDate.getJewishMonth() ==
+                                              13
+                                      ? selectedJewishDate.getJewishMonth() - 1
+                                      : selectedJewishDate.getJewishMonth(),
                               jewishDayOfMonth:
                                   selectedJewishDate.getJewishDayOfMonth(),
                             );
@@ -450,7 +458,7 @@ class _AddPlaqueState extends State<AddPlaque> {
                                 jewishDate.isJewishLeapYear();
                             print('selected leap year');
                             final jewishMonthSelected =
-                                jewishDate.getJewishMonth();
+                                selectedJewishDate.getJewishMonth();
                             print('selected jewish month');
                             final leapYearCheck = JewishDate.initDate(
                                 jewishYear: jewishDate.getJewishYear() + i,
@@ -484,7 +492,7 @@ class _AddPlaqueState extends State<AddPlaque> {
 // If selected year is not a leap year AND selected month is Adar (12),
 // then for future leap years, use Adar II (13) instead of Adar I (12)
                               if (!isSelectedYearLeap &&
-                                  jewishMonthSelected == 12 &&
+                                  jewishMonthSelected == 13 &&
                                   leapYearCheck.isJewishLeapYear()) {
                                 targetMonth = 13; // Adar II
                               }

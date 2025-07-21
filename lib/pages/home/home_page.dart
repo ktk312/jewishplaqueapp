@@ -309,10 +309,11 @@ class PlaqueListWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          hebrewDateFormatter.format(JewishDate.fromDateTime(
-                              DateTime.tryParse(isMale
-                                  ? appController.maleList[index].predate
-                                  : appController.femaleList[index].predate)!)),
+                          _getFormattedHebrewDate(
+                            isMale
+                                ? appController.maleList[index].predate
+                                : appController.femaleList[index].predate,
+                          ),
                           style: const TextStyle(
                             fontFamily: 'Alef',
                           ),
@@ -348,5 +349,19 @@ class PlaqueListWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getFormattedHebrewDate(String? predate) {
+    if (predate == null || predate.isEmpty) {
+      return ''; // or return 'N/A', 'Unknown', etc.
+    }
+
+    final parsedDate = DateTime.tryParse(predate);
+    if (parsedDate == null) {
+      return ''; // or log an error if needed
+    }
+
+    final jewishDate = JewishDate.fromDateTime(parsedDate);
+    return hebrewDateFormatter.format(jewishDate);
   }
 }
