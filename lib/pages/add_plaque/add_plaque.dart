@@ -75,6 +75,8 @@ class _AddPlaqueState extends State<AddPlaque> {
 
   String ledsText = '';
 
+  bool isCurrentYear = false;
+
   getAvailableLeds() async {
     List<String> returnList = [];
     final response = await NetworkCalls().getAvailableLeds();
@@ -381,12 +383,18 @@ class _AddPlaqueState extends State<AddPlaque> {
 
                           final selectedJewishDate =
                               JewishDate.fromDateTime(date);
+
                           print("selected jewish date : $selectedJewishDate");
                           final today = DateTime.now();
                           final todayTruncated = DateTime(today.year,
                               today.month, today.day); // remove time component
                           int candidateYear =
                               JewishDate.fromDateTime(today).getJewishYear();
+
+                          if (selectedJewishDate.getJewishYear() ==
+                              candidateYear) {
+                            isCurrentYear = true;
+                          }
                           final candidateCheckLeap = JewishDate.initDate(
                               jewishYear: candidateYear,
                               jewishMonth: 1,
@@ -586,7 +594,8 @@ class _AddPlaqueState extends State<AddPlaque> {
                         "predate": jDate[1].toString(),
                         "led": dropdownvalue.value,
                         "hebruname": hebrewNameController.text,
-                        "dateList": jsonEncode(gregorianDates)
+                        "dateList": jsonEncode(gregorianDates),
+                        "currentyear": isCurrentYear,
                       };
 
                       print(body);

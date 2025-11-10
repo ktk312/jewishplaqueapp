@@ -55,7 +55,7 @@ class NetworkCalls {
 
     if (res.statusCode >= 200 && res.statusCode < 300) {
       returnString = res.body;
-      MQTTClientWrapper newclient = MQTTClientWrapper();
+      // MQTTClientWrapper newclient = MQTTClientWrapper();
     } else {
       returnString = "Error: ${res.reasonPhrase.toString()}";
     }
@@ -429,6 +429,33 @@ class NetworkCalls {
 //       print(res.reasonPhrase);
 //       returnString = "Error: ${res.reasonPhrase.toString()}";
 //     }
+    return returnString;
+  }
+
+  Future<String> updateCurrentYear(var body) async {
+    String returnString = '';
+
+    // try {
+    print('in update current year');
+    var url = Uri.parse('https://bsdjudaica.com/plaq/updatecurrentyear.php');
+    print('after uri current year update');
+    http.Response res = await http.post(url,
+        headers: {
+          'Authorization': 'Bearer ${Get.find<MyAppController>().token.value}',
+        },
+        body: jsonEncode(body));
+    print(res.body);
+    print(res.reasonPhrase);
+
+    if (res.statusCode >= 200 && res.statusCode < 300) {
+      returnString = res.body;
+      // MQTTClientWrapper newclient = MQTTClientWrapper();
+    } else {
+      returnString = "Error: ${res.reasonPhrase.toString()}";
+    }
+    // } on Exception catch (e) {
+    // print(e);
+    // }
     return returnString;
   }
 }

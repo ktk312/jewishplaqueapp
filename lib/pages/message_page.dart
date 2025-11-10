@@ -94,6 +94,8 @@ class _MessagePageState extends State<MessagePage> {
   // Initial Selected Value
   String dropdownvalue = 'Item 1';
 
+  bool isOn = false;
+
   // List of items in our dropdown menu
   var allLedsList = [
     'Item 1',
@@ -248,6 +250,23 @@ class _MessagePageState extends State<MessagePage> {
                   children: [
                     Row(
                       children: [
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Text("Switch Associated Leds"),
+                        Switch(
+                            value: isOn,
+                            onChanged: (x) {
+                              isOn = x;
+                              var body = {
+                                "led_number":
+                                    x ? 'assosiateon' : 'associateoff',
+                                "userId": appController.userId.value
+                              };
+
+                              newclient.publishMessage(jsonEncode(body));
+                              setState(() {});
+                            }),
                         const SizedBox(
                           width: 20,
                         ),

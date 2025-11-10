@@ -34,6 +34,10 @@ class _PlaqueDetailPageState extends State<PlaqueDetailPage> {
     // getPlaques();
     hebrewDateFormatter.hebrewFormat = true;
     getCredentials();
+
+    isCurrentYear = widget.isMale
+        ? appController.maleList[widget.index].currentyear
+        : appController.femaleList[widget.index].currentyear;
   }
 
   TextEditingController hostController = TextEditingController();
@@ -66,6 +70,7 @@ class _PlaqueDetailPageState extends State<PlaqueDetailPage> {
 
   bool isTesting = false;
   MQTTClientWrapper newclient = MQTTClientWrapper();
+  bool isCurrentYear = false;
 
   HebrewDateFormatter hebrewDateFormatter = HebrewDateFormatter();
   final appController = Get.find<MyAppController>();
@@ -160,6 +165,26 @@ class _PlaqueDetailPageState extends State<PlaqueDetailPage> {
                     ),
                     Spacer(
                       flex: 1,
+                    ),
+                    Text('Current Year'),
+                    Obx(
+                      () => Switch(
+                          value: widget.isMale
+                              ? appController.maleList[widget.index].currentyear
+                              : appController
+                                  .femaleList[widget.index].currentyear,
+                          onChanged: (x) {
+                            appController.updateCurrentYear(
+                                widget.isMale
+                                    ? appController
+                                        .maleList[widget.index].plaqueId
+                                    : appController
+                                        .femaleList[widget.index].plaqueId,
+                                x);
+                          }),
+                    ),
+                    SizedBox(
+                      width: 10,
                     ),
                     GestureDetector(
                       onTap: () async {

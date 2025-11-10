@@ -68,6 +68,19 @@ class MyAppController extends GetxController {
     }
   }
 
+  updateCurrentYear(String id, bool isCurrentYear) async {
+    var body = {"id": id, "currentyear": isCurrentYear};
+    final response = await NetworkCalls().updateCurrentYear(body);
+    if (response.contains('Error')) {
+      Get.rawSnackbar(message: response, backgroundColor: Colors.red);
+    } else {
+      Get.rawSnackbar(
+          message: 'Current Year Updated Successfully!',
+          backgroundColor: Colors.green);
+      getPlaques();
+    }
+  }
+
   deletePlaque(String id) async {
     final response = await NetworkCalls().deletePlaque(id);
     if (response.contains('Error')) {

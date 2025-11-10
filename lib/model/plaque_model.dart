@@ -20,6 +20,7 @@ class PlaqueModel {
   String predate;
   String led;
   String hebruname;
+  bool currentyear;
   List<Relative> relatives;
 
   PlaqueModel({
@@ -33,6 +34,7 @@ class PlaqueModel {
     required this.led,
     required this.hebruname,
     required this.relatives,
+    required this.currentyear,
   });
 
   factory PlaqueModel.fromJson(Map<String, dynamic> json) => PlaqueModel(
@@ -45,6 +47,7 @@ class PlaqueModel {
         predate: json["predate"],
         led: json["led"],
         hebruname: json["hebruname"],
+        currentyear: json['currentyear'] == "1" ? true : false,
         relatives: List<Relative>.from(
             json["relatives"].map((x) => Relative.fromJson(x))),
       );
@@ -59,6 +62,7 @@ class PlaqueModel {
         "predate": predate,
         "led": led,
         "hebruname": hebruname,
+        "currentyear": currentyear,
         "relatives": List<dynamic>.from(relatives.map((x) => x.toJson())),
       };
 }
