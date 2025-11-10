@@ -475,6 +475,11 @@ class _AddPlaqueState extends State<AddPlaque> {
                                   leapYearCheck.isJewishLeapYear()) {
                                 targetMonth = 13; // Adar II
                               }
+                              if (!selectedJewishDate.isJewishLeapYear() &&
+                                  jewishMonthSelected == 12 &&
+                                  leapYearCheck.isJewishLeapYear()) {
+                                targetMonth = 13;
+                              }
 
                               final nextYearDate = JewishDate.initDate(
                                   jewishYear: jewishDate.getJewishYear() + i,
