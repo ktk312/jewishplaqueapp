@@ -102,6 +102,12 @@ class _PrintPageState extends State<PrintPage> {
           "${hebrewDay.getJewishMonth()}-${hebrewDay.getJewishDayOfMonth()}");
     }
 
+    List<PlaqueModel> currentYearPlaques = appController.plaqueList
+        .where((plaque) => plaque.currentyear == true)
+        .toList();
+
+// plaqueList = currentYearPlaques;
+
     // Step 3: Filter plaques whose Hebrew death date falls within the remaining week
     List<PlaqueModel> nineDayPlaques = appController.plaqueList.where((plaque) {
       DateTime dod = DateTime.parse(plaque.predate);
@@ -111,7 +117,8 @@ class _PrintPageState extends State<PrintPage> {
       return hebrewWeekKeys.contains(plaqueKey);
     }).toList();
 
-    plaqueList = nineDayPlaques;
+    // plaqueList = nineDayPlaques;
+    plaqueList = [...nineDayPlaques, ...currentYearPlaques];
     setState(() {});
   }
 

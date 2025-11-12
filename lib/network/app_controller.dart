@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:calendar_dashboard/helper.dart';
 import 'package:calendar_dashboard/model/plaque_model.dart';
 import 'package:calendar_dashboard/network/mqtt_func.dart';
 import 'package:calendar_dashboard/network/network_calls.dart';
@@ -102,6 +103,22 @@ class MyAppController extends GetxController {
         maleList.clear();
         femaleList.clear();
         for (var element in plaqueList) {
+          //check if current year true
+          if (element.currentyear) {
+            print(element.plaqueId);
+            print(element.predate);
+
+            final nextYearGregorianDate =
+                getNextYearGregorianDate(element.predate);
+
+            print("nextYearGregorianDate $nextYearGregorianDate");
+            if (nextYearGregorianDate.isAfter(DateTime.now())) {
+              updateCurrentYear(element.plaqueId, false);
+            }
+          }
+          //calculate the next year date
+          //if is before do nothing if after update it to false
+
           if (element.gender.toUpperCase() == "MALE") {
             maleList.add(element);
           } else {
