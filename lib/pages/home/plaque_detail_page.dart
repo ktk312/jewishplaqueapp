@@ -173,14 +173,19 @@ class _PlaqueDetailPageState extends State<PlaqueDetailPage> {
                               ? appController.maleList[widget.index].currentyear
                               : appController
                                   .femaleList[widget.index].currentyear,
-                          onChanged: (x) {
-                            appController.updateCurrentYear(
+                          onChanged: (x) async {
+                            await appController.updateCurrentYear(
                                 widget.isMale
                                     ? appController
                                         .maleList[widget.index].plaqueId
                                     : appController
                                         .femaleList[widget.index].plaqueId,
                                 x);
+                            var body = {
+                              "userId": appController.userId.value,
+                              "led_number": 'update',
+                            };
+                            newclient.publishMessage(jsonEncode(body));
                           }),
                     ),
                     SizedBox(

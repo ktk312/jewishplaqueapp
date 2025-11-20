@@ -391,10 +391,6 @@ class _AddPlaqueState extends State<AddPlaque> {
                           int candidateYear =
                               JewishDate.fromDateTime(today).getJewishYear();
 
-                          if (selectedJewishDate.getJewishYear() ==
-                              candidateYear) {
-                            isCurrentYear = true;
-                          }
                           final candidateCheckLeap = JewishDate.initDate(
                               jewishYear: candidateYear,
                               jewishMonth: 1,
@@ -500,6 +496,21 @@ class _AddPlaqueState extends State<AddPlaque> {
                                   .toString());
                               print(nextYearDate);
                             }
+                          }
+
+                          if (selectedJewishDate.getJewishYear() ==
+                              candidateYear) {
+                            isCurrentYear = true;
+                          }
+
+                          final currentyearcheck =
+                              DateTime.parse(gregorianDates[0]);
+
+                          if (DateTime.now().isAfter(
+                                  selectedJewishDate.getGregorianCalendar()) &&
+                              DateTime.now().isBefore(
+                                  DateTime.parse(gregorianDates[0]))) {
+                            isCurrentYear = true;
                           }
 
                           gregorianDates.forEach((element) {

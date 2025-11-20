@@ -112,7 +112,7 @@ class MyAppController extends GetxController {
                 getNextYearGregorianDate(element.predate);
 
             print("nextYearGregorianDate $nextYearGregorianDate");
-            if (nextYearGregorianDate.isAfter(DateTime.now())) {
+            if (nextYearGregorianDate.isBefore(DateTime.now())) {
               updateCurrentYear(element.plaqueId, false);
             }
           }
