@@ -117,8 +117,22 @@ class _PrintPageState extends State<PrintPage> {
       return hebrewWeekKeys.contains(plaqueKey);
     }).toList();
 
-    // plaqueList = nineDayPlaques;
-    plaqueList = [...nineDayPlaques, ...currentYearPlaques];
+// --- Remove duplicates ---
+    final addedIds = <String>{}; // or int, depending on your ID type
+
+    List<PlaqueModel> merged = [];
+
+// Add nine-day plaques
+    for (var p in nineDayPlaques) {
+      if (addedIds.add(p.plaqueId)) merged.add(p);
+    }
+
+// Add current-year plaques (only if not already added)
+    for (var p in currentYearPlaques) {
+      if (addedIds.add(p.plaqueId)) merged.add(p);
+    }
+
+    plaqueList = merged;
     setState(() {});
   }
 

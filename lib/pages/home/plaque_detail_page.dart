@@ -184,7 +184,12 @@ class _PlaqueDetailPageState extends State<PlaqueDetailPage> {
                             var body = {
                               "userId": appController.userId.value,
                               "led_number": 'update',
+                              "data": widget.isMale
+                                  ? appController.maleList[widget.index].led
+                                  : appController.femaleList[widget.index].led,
+                              "state": x ? "1" : "0"
                             };
+                            print(body);
                             newclient.publishMessage(jsonEncode(body));
                           }),
                     ),
